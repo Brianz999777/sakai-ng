@@ -4,6 +4,8 @@ import { Dashboard } from './app/pages/dashboard/dashboard';
 import { Documentation } from './app/pages/documentation/documentation';
 import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
+import { Login } from './app/components/login/login';
+import { Register } from './app/components/register/register';
 
 export const appRoutes: Routes = [
     {
@@ -19,5 +21,7 @@ export const appRoutes: Routes = [
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
+    { path: 'login', component: Login },
+    { path: 'register', component:Register },
     { path: '**', redirectTo: '/notfound' }
 ];

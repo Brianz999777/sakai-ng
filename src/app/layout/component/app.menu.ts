@@ -28,6 +28,13 @@ export class AppMenu {
                 items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
             },
             {
+                label: 'Auth',
+                items: [
+                    { label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login'] },
+                    { label: 'Register', icon: 'pi pi-fw pi-user-plus', routerLink: ['/register'] }
+                ]
+            },
+            {
                 label: 'UI Components',
                 items: [
                     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
