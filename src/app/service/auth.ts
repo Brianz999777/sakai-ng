@@ -21,6 +21,7 @@ export class Auth {
   }
 
   register(registerRequest: any) {
+    
     return this.http.post(`${this.baseUrl}/register`, registerRequest);
   }
 

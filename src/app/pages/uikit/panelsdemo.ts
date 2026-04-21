@@ -172,7 +172,7 @@ import { ToolbarModule } from 'primeng/toolbar';
                             <input pInputText id="password" type="password" />
                         </div>
                         <div class="flex">
-                            <p-button label="Login" icon="pi pi-user" class="w-full max-w-[17.35rem] mx-auto"></p-button>
+                            <!-- <p-button label="Login" icon="pi pi-user" class="w-full max-w-[17.35rem] mx-auto"></p-button> -->
                         </div>
                     </div>
                     <div class="w-full md:w-2/12">
