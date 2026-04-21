@@ -17,12 +17,23 @@ export class Auth {
   constructor(private http: HttpClient) {}
 
   login(loginRequest: any) {
-    return this.http.post<any>(`${this.baseUrl}/login`, loginRequest);
+    const response = this.http.post<any>(`${this.baseUrl}/login`, loginRequest);
+    response.subscribe((response) => {
+      this.setToken(response.token);
+      this.setUser(response.usuario_dto);
+    });
+    return response;
   }
 
   register(registerRequest: any) {
     
-    return this.http.post(`${this.baseUrl}/register`, registerRequest);
+    const response = this.http.post<any>(`${this.baseUrl}/register`, registerRequest);
+    response.subscribe((response) => {
+      this.setToken(response.token);
+      this.setUser(response.usuario_dto);
+    });
+    return response;
+
   }
 
   setToken(token: string): void {
@@ -44,6 +55,7 @@ export class Auth {
 
   setUser(user: UserDTO): void {
     localStorage.setItem(this.userKey, JSON.stringify(user));
+    
   }
 
   getUser(): UserDTO | null {

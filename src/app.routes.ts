@@ -5,6 +5,7 @@ import { Documentation } from './app/pages/documentation/documentation';
 import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { Register } from './app/components/register/register';
+import { LogIn } from './app/components/log-in/log-in';
 
 export const appRoutes: Routes = [
     {
@@ -19,7 +20,7 @@ export const appRoutes: Routes = [
     },
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
-    { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
     { path: 'register', component:Register },
+    { path: 'login', component:LogIn },
     { path: '**', redirectTo: '/notfound' }
 ];

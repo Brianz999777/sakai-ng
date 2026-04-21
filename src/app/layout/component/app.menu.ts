@@ -30,7 +30,8 @@ export class AppMenu {
             {
                 label: 'Auth',
                 items: [
-                    { label: 'Register', icon: 'pi pi-fw pi-user-plus', routerLink: ['/register'] }
+                    { label: 'Register', icon: 'pi pi-fw pi-user-plus', routerLink: ['/register'] },
+                    { label: 'Login', icon: 'pi pi-fw pi-user-plus', routerLink: ['/login'] }
                 ]
             },
             {

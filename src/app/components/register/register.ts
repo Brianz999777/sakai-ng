@@ -19,7 +19,14 @@ import { TabsModule } from 'primeng/tabs';
 })
 export class Register {
   formRegister: FormGroup;
-  activeTab: string = '0'; // '0' for Natural, '1' for Juridica
+  get activeTab(): string {
+    return this._activeTab;
+  }
+  set activeTab(value: string) {
+    this._activeTab = value;
+    this.updateValidators();
+  }
+  private _activeTab: string = '0';
 
   constructor(private fb: FormBuilder, private router: Router, private authService: Auth) {
     this.formRegister = this.fb.group({
@@ -31,16 +38,48 @@ export class Register {
       nro_doc_per: ['', Validators.required],
       nombre_per: ['', Validators.required],
       apellido_pat_per: ['', Validators.required],
+      apellido_mat_per: [''],
+      sexo_per: ['M'],
+      anio_nac_per: [1990, Validators.required],
+      domicilio_per: ['', Validators.required],
+      cp_per: ['', Validators.required],
+      provincia_per: ['', Validators.required],
       
-      // Persona Natural 
+      // Persona Natural specific
       primer_vivienda_natu: [false],
       ingresos_aprox_natu: [0],
 
       // Persona Juridica specific
-      cargo_jur: ['',[Validators.required]],
-      nombre_representante_jur: ['',[Validators.required]],
-      registro_mercantil_ju: ['',[Validators.required]]
+      cargo_jur: [''],
+      nombre_representante_jur: [''],
+      registro_mercantil_ju: ['']
     }, { validators: this.passwordMatchValidator });
+
+    this.updateValidators();
+  }
+
+  updateValidators() {
+    const cargo = this.formRegister.get('cargo_jur');
+    const representante = this.formRegister.get('nombre_representante_jur');
+    const mercantil = this.formRegister.get('registro_mercantil_ju');
+    const apellido = this.formRegister.get('apellido_pat_per');
+
+    if (this.activeTab === '1') {
+      cargo?.setValidators([Validators.required]);
+      representante?.setValidators([Validators.required]);
+      mercantil?.setValidators([Validators.required]);
+      apellido?.clearValidators();
+    } else {
+      cargo?.clearValidators();
+      representante?.clearValidators();
+      mercantil?.clearValidators();
+      apellido?.setValidators([Validators.required]);
+    }
+
+    cargo?.updateValueAndValidity();
+    representante?.updateValueAndValidity();
+    mercantil?.updateValueAndValidity();
+    apellido?.updateValueAndValidity();
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -60,46 +99,39 @@ export class Register {
       email: formValues.email,
       password: formValues.password,
       estado_usu: 'ACTIVO',
-      rol: 'USUARIO'
+      rol: 'USER'
+    };
+
+    const persona: any = {
+      nro_doc_per: formValues.nro_doc_per,
+      nombre_per: formValues.nombre_per,
+      apellido_mat_per: formValues.apellido_mat_per,
+      sexo_per: formValues.sexo_per,
+      anio_nac_per: formValues.anio_nac_per,
+      domicilio_per: formValues.domicilio_per,
+      cp_per: formValues.cp_per,
+      provincia_per: formValues.provincia_per
     };
 
     if (this.activeTab === '0') {
-      registerRequest.personaNatural = {
-        nro_doc_per: formValues.nro_doc_per,
-        nombre_per: formValues.nombre_per,
-        apellido_pat_per: formValues.apellido_pat_per,
-        tipo_doc_per: 'DNI',
-        apellido_mat_per: '',
-        sexo_per: '',
-        anio_nac_per: 2000,
-        domicilio_per: '',
-        cp_per: '',
-        provincia_per: '',
-        primer_vivienda_natu: formValues.primer_vivienda_natu,
-        ingresos_aprox_natu: formValues.ingresos_aprox_natu
-      };
+      persona.tipo_doc_per = 'DNI';
+      persona.apellido_pat_per = formValues.apellido_pat_per;
+      persona.primer_vivienda_natu = formValues.primer_vivienda_natu;
+      persona.ingresos_aprox_natu = formValues.ingresos_aprox_natu;
     } else {
-      registerRequest.personaJuridica = {
-        nro_doc_per: formValues.nro_doc_per,
-        nombre_per: formValues.nombre_per,
-        apellido_pat_per: formValues.apellido_pat_per,
-        tipo_doc_per: 'RUC',
-        apellido_mat_per: '',
-        sexo_per: '',
-        anio_nac_per: 2000,
-        domicilio_per: '',
-        cp_per: '',
-        provincia_per: '',
-        cargo_jur: formValues.cargo_jur,
-        nombre_representante_jur: formValues.nombre_representante_jur,
-        registro_mercantil_ju: formValues.registro_mercantil_ju
-      };
+      persona.tipo_doc_per = 'RUC';
+      persona.apellido_pat_per = '';
+      persona.cargo_jur = formValues.cargo_jur;
+      persona.nombre_representante_jur = formValues.nombre_representante_jur;
+      persona.registro_mercantil_ju = formValues.registro_mercantil_ju;
     }
+
+    registerRequest.persona = persona;
 
     this.authService.register(registerRequest).subscribe({
       next: (response) => {
         console.log('Registro exitoso:', response);
-        // this.router.navigate(['/auth/login']);
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Error en el registro:', error);
