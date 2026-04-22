@@ -71,6 +71,8 @@
                                         <input
                                             pInputText
                                             id="anioNac"
+                                            maxlength="4"
+                                            minlength="4"
                                             type="number"
                                             placeholder="Ej. 1990"
                                             class="w-full mb-2"
@@ -297,3 +299,6 @@
         </div>
     </div>
 </form>
+<div>
+    {{ formRegister.value | json }}
+</div>
