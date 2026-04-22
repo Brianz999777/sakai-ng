@@ -35,6 +35,13 @@ export class AppMenu {
                 ]
             },
             {
+                label: 'Inmuebles',
+                items: [
+                    { label: 'Ventas', icon: 'pi pi-fw pi-home', routerLink: ['/busqueda-venta'] },
+                    { label: 'Alquiler', icon: 'pi pi-fw pi-building', routerLink: ['/busqueda-alquiler'] }
+                ]
+            },
+            {
                 label: 'UI Components',
                 items: [
                     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },

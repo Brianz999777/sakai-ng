@@ -1,0 +1,25 @@
+:host {
+    display: block;
+    background-color: var(--surface-ground);
+    min-height: 100vh;
+}
+
+::ng-deep .p-galleria {
+    border: none;
+    .p-galleria-thumbnail-container {
+        background: rgba(0, 0, 0, 0.8);
+    }
+}
+
+.p-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+}
+
+h1 {
+    line-height: 1.2;
+}
+
+.max-w-7xl {
+    max-width: 80rem;
+}

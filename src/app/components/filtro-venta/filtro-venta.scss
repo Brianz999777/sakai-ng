@@ -1,0 +1,39 @@
+.card {
+    background: var(--surface-card);
+    border-radius: 12px;
+    position: sticky;
+    top: 1rem;
+}
+
+h4 {
+    font-size: 0.95rem;
+    color: var(--surface-700);
+}
+
+::ng-deep {
+    .p-selectbutton .p-button {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .p-inputnumber-input {
+        width: 100% !important;
+        font-size: 0.9rem;
+    }
+
+    .p-accordion p-accordiontab .p-accordion-header .p-accordion-header-link {
+        background: transparent;
+        border: none;
+        padding-left: 0;
+        padding-right: 0;
+        font-weight: 600;
+        color: var(--surface-700);
+    }
+
+    .p-accordion p-accordiontab .p-accordion-content {
+        background: transparent;
+        border: none;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

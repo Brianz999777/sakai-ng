@@ -1,0 +1,21 @@
+.card {
+    background: var(--surface-card);
+    border-radius: 12px;
+    position: sticky;
+    top: 1rem;
+}
+
+h4 {
+    font-size: 0.95rem;
+    color: var(--surface-700);
+}
+
+::ng-deep {
+    .p-togglebutton {
+        width: 100%;
+    }
+    .p-togglebutton.p-button {
+        font-size: 0.9rem;
+        justify-content: flex-start;
+    }
+}

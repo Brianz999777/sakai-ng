@@ -1,0 +1,73 @@
+<div class="card p-3 shadow-none border-none surface-ground h-full">
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold m-0"><i class="pi pi-filter mr-2"></i>Filtros Venta</h3>
+        <button pButton icon="pi pi-refresh" class="p-button-text p-button-sm" label="Limpiar" (click)="limpiarFiltros()"></button>
+    </div>
+
+    <!-- Precio Máximo -->
+    <div class="mb-5">
+        <h4 class="font-semibold mb-2 text-primary">Hasta tal precio</h4>
+        <p-inputNumber [(ngModel)]="precioMax" placeholder="P. ej. 250.000" class="w-full" mode="currency" currency="EUR" [min]="0" (onInput)="aplicarFiltros()"></p-inputNumber>
+    </div>
+
+    <!-- Tipo de Propiedad -->
+    <div class="mb-5">
+        <h4 class="font-semibold mb-2 text-primary">Tipo de Propiedad</h4>
+        <div class="flex flex-col gap-2">
+            <div class="flex items-center">
+                <p-checkbox name="tipo" value="casa" label="Casa" [(ngModel)]="tiposPropiedad" (onChange)="aplicarFiltros()"></p-checkbox>
+            </div>
+            <div class="flex items-center">
+                <p-checkbox name="tipo" value="piso" label="Piso" [(ngModel)]="tiposPropiedad" (onChange)="aplicarFiltros()"></p-checkbox>
+            </div>
+        </div>
+    </div>
+
+    <!-- Habitaciones -->
+    <div class="mb-5">
+        <h4 class="font-semibold mb-2 text-primary">Habitaciones</h4>
+        <div class="grid grid-cols-2 gap-2">
+            <div class="flex items-center">
+                <p-checkbox name="hab" [value]="1" label="1" [(ngModel)]="habitaciones" (onChange)="aplicarFiltros()"></p-checkbox>
+            </div>
+            <div class="flex items-center">
+                <p-checkbox name="hab" [value]="2" label="2" [(ngModel)]="habitaciones" (onChange)="aplicarFiltros()"></p-checkbox>
+            </div>
+            <div class="flex items-center">
+                <p-checkbox name="hab" [value]="3" label="3" [(ngModel)]="habitaciones" (onChange)="aplicarFiltros()"></p-checkbox>
+            </div>
+            <div class="flex items-center">
+                <p-checkbox name="hab" [value]="4" label="4+" [(ngModel)]="habitaciones" (onChange)="aplicarFiltros()"></p-checkbox>
+            </div>
+        </div>
+    </div>
+
+    <!-- Baños -->
+    <div class="mb-5">
+        <h4 class="font-semibold mb-2 text-primary">Baños</h4>
+        <div class="grid grid-cols-3 gap-2">
+            <div class="flex items-center">
+                <p-checkbox name="banos" [value]="1" label="1" [(ngModel)]="banos" (onChange)="aplicarFiltros()"></p-checkbox>
+            </div>
+            <div class="flex items-center">
+                <p-checkbox name="banos" [value]="2" label="2" [(ngModel)]="banos" (onChange)="aplicarFiltros()"></p-checkbox>
+            </div>
+            <div class="flex items-center">
+                <p-checkbox name="banos" [value]="3" label="3+" [(ngModel)]="banos" (onChange)="aplicarFiltros()"></p-checkbox>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estado del Inmueble -->
+    <div class="mb-5">
+        <h4 class="font-semibold mb-2 text-primary">Estado del Inmueble</h4>
+        <div class="flex flex-col gap-3">
+            <div class="flex items-center">
+                <p-radioButton name="estado" value="reformado" label="Reformado" [(ngModel)]="estado" (onClick)="aplicarFiltros()"></p-radioButton>
+            </div>
+            <div class="flex items-center">
+                <p-radioButton name="estado" value="a_reformar" label="A reformar" [(ngModel)]="estado" (onClick)="aplicarFiltros()"></p-radioButton>
+            </div>
+        </div>
+    </div>
+</div>
