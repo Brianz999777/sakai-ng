@@ -1,4 +1,5 @@
 export interface PersonaNatural {
+  type: 'natural';
   nro_doc_per: string;
   tipo_doc_per: string;
   nombre_per: string;

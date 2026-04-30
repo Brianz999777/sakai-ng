@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDTO } from '../interfaces/user-dto';
+import { tap } from 'rxjs';
 
 
 
@@ -16,25 +17,29 @@ export class Auth {
 
   constructor(private http: HttpClient) {}
 
-  login(loginRequest: any) {
-    const response = this.http.post<any>(`${this.baseUrl}/login`, loginRequest);
-    response.subscribe((response) => {
-      this.setToken(response.token);
-      this.setUser(response.usuario_dto);
-    });
-    return response;
-  }
-
   register(registerRequest: any) {
+    console.log("registerRequest AUTH", registerRequest);
     
-    const response = this.http.post<any>(`${this.baseUrl}/register`, registerRequest);
-    response.subscribe((response) => {
-      this.setToken(response.token);
-      this.setUser(response.usuario_dto);
-    });
-    return response;
-
+    // Retornamos el observable SIN suscribirnos aquí
+    return this.http.post<any>(`${this.baseUrl}/register`, registerRequest).pipe(
+      tap((response) => {
+        // Esto se ejecuta automáticamente cuando el componente se suscriba
+        this.setToken(response.token);
+        this.setUser(response.usuarioDTO); // Ojo: verifica si es usuario_dto o usuarioDTO
+      })
+    );
   }
+
+  // Haz lo mismo con el login para evitar errores futuros
+  login(loginRequest: any) {
+    return this.http.post<any>(`${this.baseUrl}/login`, loginRequest).pipe(
+      tap((response) => {
+        this.setToken(response.token);
+        this.setUser(response.usuarioDTO);
+      })
+    );
+  }
+
 
   setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);

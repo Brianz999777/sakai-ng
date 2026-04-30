@@ -287,7 +287,7 @@
                     </div>
 
                     <div class="mt-8">
-                        <p-button label="Crear Cuenta" styleClass="w-full py-4 text-xl" (onClick)="register()"></p-button>
+                        <p-button label="Crear Cuenta" styleClass="w-full py-4 text-xl" (onClick)="register()" [disabled]="isSubmitting" [loading]="isSubmitting"> </p-button>
                     </div>
 
                     <div class="text-center mt-6">
@@ -299,6 +299,4 @@
         </div>
     </div>
 </form>
-<div>
-    {{ formRegister.value | json }}
-</div>
+<div>{{ formRegister.value | json }}</div>

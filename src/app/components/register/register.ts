@@ -19,6 +19,8 @@ import { TabsModule } from 'primeng/tabs';
 })
 export class Register {
   formRegister: FormGroup;
+  isSubmitting: boolean = false; // Flag para evitar múltiples envíos
+
   get activeTab(): string {
     return this._activeTab;
   }
@@ -34,7 +36,7 @@ export class Register {
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
       
-      // Basic Persona fields
+      // Basic Persona fields (snake_case mantenido)
       nro_doc_per: ['', Validators.required],
       nombre_per: ['', Validators.required],
       apellido_pat_per: ['', Validators.required],
@@ -88,10 +90,13 @@ export class Register {
   }
 
   register() {
-    if (this.formRegister.invalid) {
+    // Si el formulario es inválido o ya se está enviando, no hacer nada
+    if (this.formRegister.invalid || this.isSubmitting) {
       this.formRegister.markAllAsTouched();
       return;
     }
+
+    this.isSubmitting = true; // Bloquear envíos adicionales
 
     const formValues = this.formRegister.value;
 
@@ -114,11 +119,13 @@ export class Register {
     };
 
     if (this.activeTab === '0') {
+      persona.type = 'natural';
       persona.tipo_doc_per = 'DNI';
       persona.apellido_pat_per = formValues.apellido_pat_per;
       persona.primer_vivienda_natu = formValues.primer_vivienda_natu;
       persona.ingresos_aprox_natu = formValues.ingresos_aprox_natu;
     } else {
+      persona.type = 'juridica';
       persona.tipo_doc_per = 'RUC';
       persona.apellido_pat_per = '';
       persona.cargo_jur = formValues.cargo_jur;
@@ -134,6 +141,7 @@ export class Register {
         this.router.navigate(['/login']);
       },
       error: (error) => {
+        this.isSubmitting = false; // Liberar bloqueo en caso de error
         console.error('Error en el registro:', error);
       }
     });
