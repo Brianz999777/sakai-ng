@@ -128,9 +128,9 @@ export class Register {
       persona.type = 'juridica';
       persona.tipo_doc_per = 'RUC';
       persona.apellido_pat_per = '';
-      persona.cargo_jur = formValues.cargo_jur;
-      persona.nombre_representante_jur = formValues.nombre_representante_jur;
-      persona.registro_mercantil_ju = formValues.registro_mercantil_ju;
+      persona.cargo_juri = formValues.cargo_jur;
+      persona.nombre_representante_juri = formValues.nombre_representante_jur;
+      persona.registro_mercantil_juri = formValues.registro_mercantil_ju;
     }
 
     registerRequest.persona = persona;

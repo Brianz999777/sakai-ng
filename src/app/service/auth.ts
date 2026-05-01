@@ -25,7 +25,7 @@ export class Auth {
       tap((response) => {
         // Esto se ejecuta automáticamente cuando el componente se suscriba
         this.setToken(response.token);
-        this.setUser(response.usuarioDTO); // Ojo: verifica si es usuario_dto o usuarioDTO
+        this.setUser(response.usuario_dto); // Ojo: verifica si es usuario_dto o usuarioDTO
       })
     );
   }
@@ -35,7 +35,7 @@ export class Auth {
     return this.http.post<any>(`${this.baseUrl}/login`, loginRequest).pipe(
       tap((response) => {
         this.setToken(response.token);
-        this.setUser(response.usuarioDTO);
+        this.setUser(response.usuario_dto);
       })
     );
   }

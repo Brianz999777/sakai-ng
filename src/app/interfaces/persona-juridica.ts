@@ -10,7 +10,7 @@ export interface PersonaJuridica {
   domicilio_per: string;
   cp_per: string;
   provincia_per: string;
-  cargo_jur: string;
-  nombre_representante_jur: string;
-  registro_mercantil_ju: string;
+  cargo_juri: string;
+  nombre_representante_juri: string;
+  registro_mercantil_juri: string;
 }
