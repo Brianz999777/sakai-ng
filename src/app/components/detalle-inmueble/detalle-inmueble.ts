@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PropiedadVenta, PropiedadAlquiler } from '../../interfaces/inmueble';
-import { InmuebleMockService } from '../../service/inmueble-mock.service';
+import { InmuebleService } from '../../service/inmueble.service';
 import { GalleriaModule } from 'primeng/galleria';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
@@ -45,7 +45,7 @@ export class DetalleInmueble implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private mockService: InmuebleMockService
+    private inmuebleService: InmuebleService
   ) {}
 
   ngOnInit() {
@@ -55,12 +55,14 @@ export class DetalleInmueble implements OnInit {
       this.tipo = url.includes('venta') ? 'venta' : 'alquiler';
 
       if (this.tipo === 'venta' && this.id) {
-        this.mockService.getVentaById(this.id).subscribe(res => {
-          this.inmuebleVenta = res;
+        this.inmuebleService.getVentaById(this.id).subscribe({
+          next: (res) => this.inmuebleVenta = res,
+          error: (err) => console.error("Error obteniendo detalle venta", err)
         });
       } else if (this.tipo === 'alquiler' && this.id) {
-        this.mockService.getAlquilerById(this.id).subscribe(res => {
-          this.inmuebleAlquiler = res;
+        this.inmuebleService.getAlquilerById(this.id).subscribe({
+          next: (res) => this.inmuebleAlquiler = res,
+          error: (err) => console.error("Error obteniendo detalle alquiler", err)
         });
       }
     });

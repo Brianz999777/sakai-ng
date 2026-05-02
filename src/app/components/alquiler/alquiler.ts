@@ -17,12 +17,12 @@ export class Alquiler {
   @Input() inmueble!: PropiedadAlquiler;
 
   get fullAddress(): string {
-    return `${this.inmueble.tipoViaProp} ${this.inmueble.direccionProp}, ${this.inmueble.numeroProp}`;
+    return `${this.inmueble.tipo_via_prop} ${this.inmueble.direccion_prop}, ${this.inmueble.numero_prop}`;
   }
 
   get mainPhoto(): string {
     return this.inmueble.fotos && this.inmueble.fotos.length > 0 
-      ? this.inmueble.fotos[0].urlFoto 
+      ? this.inmueble.fotos[0].url_foto 
       : 'assets/images/no-photo.jpg';
   }
 }

@@ -100,13 +100,13 @@ export class Register {
 
     const formValues = this.formRegister.value;
 
+    // 1. DTO de PeticionRegistro (Sin rol ni estado_usu por seguridad)
     const registerRequest: any = {
       email: formValues.email,
-      password: formValues.password,
-      estado_usu: 'ACTIVO',
-      rol: 'USER'
+      password: formValues.password
     };
 
+    // 2. DTO de Persona (Volvemos a snake_case porque tu Java está configurado para leerlo así)
     const persona: any = {
       nro_doc_per: formValues.nro_doc_per,
       nombre_per: formValues.nombre_per,
@@ -118,16 +118,21 @@ export class Register {
       provincia_per: formValues.provincia_per
     };
 
+    // 3. Polimorfismo según el tipo de persona
     if (this.activeTab === '0') {
       persona.type = 'natural';
       persona.tipo_doc_per = 'DNI';
       persona.apellido_pat_per = formValues.apellido_pat_per;
+      
       persona.primer_vivienda_natu = formValues.primer_vivienda_natu;
       persona.ingresos_aprox_natu = formValues.ingresos_aprox_natu;
     } else {
       persona.type = 'juridica';
       persona.tipo_doc_per = 'RUC';
-      persona.apellido_pat_per = '';
+      
+      persona.apellido_pat_per = 'N/A'; 
+      persona.apellido_mat_per = 'N/A';
+      
       persona.cargo_juri = formValues.cargo_jur;
       persona.nombre_representante_juri = formValues.nombre_representante_jur;
       persona.registro_mercantil_juri = formValues.registro_mercantil_ju;

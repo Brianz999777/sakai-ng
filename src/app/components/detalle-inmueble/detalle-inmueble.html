@@ -4,11 +4,11 @@
         <div class="col-span-12 lg:col-span-7 bg-black flex items-center justify-center p-0">
             <p-galleria [value]="generalInfo.fotos" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '100%'}" [numVisible]="5" [circular]="true" [showItemNavigators]="true" [showThumbnails]="true">
                 <ng-template #item let-item>
-                    <img [src]="item.urlFoto" style="width: 100%; display: block; height: 500px; object-fit: cover" />
+                    <img [src]="item.url_foto" style="width: 100%; display: block; height: 500px; object-fit: cover" />
                 </ng-template>
                 <ng-template #thumbnail let-item>
                     <div class="grid grid-nogutter justify-center">
-                        <img [src]="item.urlFoto" style="width: 80px; height: 60px; object-fit: cover; display: block" />
+                        <img [src]="item.url_foto" style="width: 80px; height: 60px; object-fit: cover; display: block" />
                     </div>
                 </ng-template>
             </p-galleria>
@@ -20,41 +20,41 @@
                 <div class="flex justify-between items-start mb-4">
                     <div>
                         <span class="text-sm font-medium text-primary uppercase tracking-widest">{{ tipo === 'venta' ? 'Venta' : 'Alquiler' }}</span>
-                        <h1 class="text-3xl font-bold m-0 mt-1">{{ generalInfo.tipoViaProp }} en {{ generalInfo.direccionProp }}</h1>
-                        <p class="text-secondary mt-1"><i class="pi pi-map-marker mr-1"></i> {{ generalInfo.provinciaProp }} ({{ generalInfo.cpProp }})</p>
+                        <h1 class="text-3xl font-bold m-0 mt-1">{{ generalInfo.tipo_via_prop }} en {{ generalInfo.direccion_prop }}</h1>
+                        <p class="text-secondary mt-1"><i class="pi pi-map-marker mr-1"></i> {{ generalInfo.provincia_prop }} ({{ generalInfo.cp_prop }})</p>
                     </div>
-                    <p-tag [value]="generalInfo.nroRefProp" severity="info" class="shadow-sm"></p-tag>
+                    <p-tag [value]="generalInfo.nro_ref_prop" severity="info" class="shadow-sm"></p-tag>
                 </div>
 
-                <div class="text-4xl font-extrabold text-primary mb-6">{{ tipo === 'venta' ? (inmuebleVenta?.precioVenta | currency:'EUR':'symbol':'1.0-0') : (inmuebleAlquiler?.precioAlquiler | currency:'EUR':'symbol':'1.0-0') + ' / mes' }}</div>
+                <div class="text-4xl font-extrabold text-primary mb-6">{{ tipo === 'venta' ? (inmuebleVenta?.precio_venta | currency:'EUR':'symbol':'1.0-0') : (inmuebleAlquiler?.precio_alquiler | currency:'EUR':'symbol':'1.0-0') + ' / mes' }}</div>
 
                 <!-- Características Rápidas (Unificadas) -->
                 <div class="flex flex-wrap gap-6 mb-8 bg-surface-50 p-4 rounded-xl">
-                    <div class="flex items-center gap-2" *ngIf="generalInfo.metrosProp">
+                    <div class="flex items-center gap-2" *ngIf="generalInfo.metros_prop">
                         <i class="pi pi-expand text-xl text-primary"></i>
                         <div>
-                            <div class="font-bold text-lg">{{ generalInfo.metrosProp }} m²</div>
+                            <div class="font-bold text-lg">{{ generalInfo.metros_prop }} m²</div>
                             <div class="text-xs text-secondary uppercase">Construidos</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2" *ngIf="generalInfo.nroHabitaciones">
+                    <div class="flex items-center gap-2" *ngIf="generalInfo.nro_habitaciones">
                         <i class="pi pi-box text-xl text-primary"></i>
                         <div>
-                            <div class="font-bold text-lg">{{ generalInfo.nroHabitaciones }}</div>
+                            <div class="font-bold text-lg">{{ generalInfo.nro_habitaciones }}</div>
                             <div class="text-xs text-secondary uppercase">Habitaciones</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2" *ngIf="generalInfo.nroBanos">
+                    <div class="flex items-center gap-2" *ngIf="generalInfo.nro_banos">
                         <i class="pi pi-th-large text-xl text-primary"></i>
                         <div>
-                            <div class="font-bold text-lg">{{ generalInfo.nroBanos }}</div>
+                            <div class="font-bold text-lg">{{ generalInfo.nro_banos }}</div>
                             <div class="text-xs text-secondary uppercase">Baños</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2" *ngIf="tipo === 'alquiler' && inmuebleAlquiler?.nroPersonasAlquiler">
+                    <div class="flex items-center gap-2" *ngIf="tipo === 'alquiler' && inmuebleAlquiler?.nro_personas_alquiler">
                         <i class="pi pi-users text-xl text-primary"></i>
                         <div>
-                            <div class="font-bold text-lg">{{ inmuebleAlquiler?.nroPersonasAlquiler }}</div>
+                            <div class="font-bold text-lg">{{ inmuebleAlquiler?.nro_personas_alquiler }}</div>
                             <div class="text-xs text-secondary uppercase">Capacidad</div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                 <!-- Descripción -->
                 <div class="mb-8">
                     <h2 class="text-xl font-bold mb-3">Descripción</h2>
-                    <p class="text-lg leading-relaxed text-surface-700">{{ tipo === 'venta' ? inmuebleVenta?.descripcionVenta : inmuebleAlquiler?.descripcionAlquiler }}</p>
+                    <p class="text-lg leading-relaxed text-surface-700">{{ tipo === 'venta' ? inmuebleVenta?.descripcion_venta : inmuebleAlquiler?.descripcion_alquiler }}</p>
                 </div>
 
                 <p-divider></p-divider>
@@ -74,29 +74,29 @@
                 <div class="mb-8">
                     <h2 class="text-xl font-bold mb-4">Características</h2>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="flex items-center gap-2" *ngIf="generalInfo.ascensorProp">
+                        <div class="flex items-center gap-2" *ngIf="generalInfo.ascensor_prop">
                             <i class="pi pi-check-circle text-green-500"></i>
                             <span>Ascensor</span>
                         </div>
-                        <div class="flex items-center gap-2" *ngIf="tipo === 'venta' ? inmuebleVenta?.garageVenta : false">
+                        <div class="flex items-center gap-2" *ngIf="tipo === 'venta' ? inmuebleVenta?.garage_venta : false">
                             <i class="pi pi-car text-primary"></i>
                             <span>Garaje incluido</span>
                         </div>
-                        <div class="flex items-center gap-2" *ngIf="tipo === 'venta' ? inmuebleVenta?.aireAcondicionadoVenta : false">
+                        <div class="flex items-center gap-2" *ngIf="tipo === 'venta' ? inmuebleVenta?.aire_acondicionado_venta : false">
                             <i class="pi pi-sun text-primary"></i>
                             <span>Aire Acondicionado</span>
                         </div>
-                        <div class="flex items-center gap-2" *ngIf="tipo === 'alquiler' ? inmuebleAlquiler?.wifiAlquiler : false">
+                        <div class="flex items-center gap-2" *ngIf="tipo === 'alquiler' ? inmuebleAlquiler?.wifi_alquiler : false">
                             <i class="pi pi-wifi text-primary"></i>
                             <span>WiFi Incluido</span>
                         </div>
-                        <div class="flex items-center gap-2" *ngIf="tipo === 'alquiler' ? inmuebleAlquiler?.permiteMascotasAlquiler : false">
+                        <div class="flex items-center gap-2" *ngIf="tipo === 'alquiler' ? inmuebleAlquiler?.permite_mascotas_alquiler : false">
                             <i class="pi pi-heart text-primary"></i>
                             <span>Mascotas permitidas</span>
                         </div>
-                        <div class="flex items-center gap-2" *ngIf="tipo === 'alquiler' && inmuebleAlquiler?.fianzaAlquiler">
+                        <div class="flex items-center gap-2" *ngIf="tipo === 'alquiler' && inmuebleAlquiler?.fianza_alquiler">
                             <i class="pi pi-shield text-primary"></i>
-                            <span>Fianza: {{ inmuebleAlquiler?.fianzaAlquiler | currency:'EUR':'symbol':'1.0-0' }}</span>
+                            <span>Fianza: {{ inmuebleAlquiler?.fianza_alquiler | currency:'EUR':'symbol':'1.0-0' }}</span>
                         </div>
                     </div>
                 </div>

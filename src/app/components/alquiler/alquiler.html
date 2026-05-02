@@ -1,15 +1,15 @@
 <div class="card-inmueble mb-4 px-2">
     <div class="flex flex-col md:flex-row shadow-lg border rounded-lg bg-card overflow-hidden h-full">
         <!-- Imagen -->
-        <div class="w-full md:w-4/12 relative cursor-pointer" [routerLink]="['/detalle-alquiler', inmueble.idProp]">
-            <img [src]="mainPhoto" [alt]="inmueble.nroRefProp" class="w-full h-full object-cover min-h-[200px] md:min-h-[280px]" />
+        <div class="w-full md:w-4/12 relative cursor-pointer" [routerLink]="['/detalle-alquiler', inmueble.id_prop]">
+            <img [src]="mainPhoto" [alt]="inmueble.nro_ref_prop" class="w-full h-full object-cover min-h-[200px] md:min-h-[280px]" />
             <div class="absolute top-2 left-2 flex flex-col gap-2">
-                <p-tag *ngIf="inmueble.permiteMascotasAlquiler" value="Mascotas ok" severity="success" icon="pi pi-check"></p-tag>
-                <p-tag *ngIf="inmueble.permiteParejasAlquiler" value="Parejas ok" severity="info" icon="pi pi-users"></p-tag>
+                <p-tag *ngIf="inmueble.permite_mascotas_alquiler" value="Mascotas ok" severity="success" icon="pi pi-check"></p-tag>
+                <p-tag *ngIf="inmueble.permite_parejas_alquiler" value="Parejas ok" severity="info" icon="pi pi-users"></p-tag>
             </div>
             <div class="absolute bottom-0 left-0 w-full p-2 bg-black/50 text-white flex justify-between items-center text-sm">
                 <span><i class="pi pi-camera mr-1"></i>{{ inmueble.fotos.length }}</span>
-                <span *ngIf="inmueble.exteriorAlquiler"><p-tag value="Exterior" severity="warn" [style]="{'font-size': '10px'}"></p-tag></span>
+                <span *ngIf="inmueble.exterior_alquiler"><p-tag value="Exterior" severity="warn" [style]="{'font-size': '10px'}"></p-tag></span>
             </div>
         </div>
 
@@ -17,33 +17,33 @@
         <div class="w-full md:w-8/12 p-4 flex flex-col justify-between">
             <div class="flex flex-col gap-2">
                 <div class="flex justify-between items-start">
-                    <a [routerLink]="['/detalle-alquiler', inmueble.idProp]" class="text-lg md:text-xl font-bold text-gray-900 no-underline hover:text-primary transition-colors line-clamp-1"> {{ fullAddress }} </a>
+                    <a [routerLink]="['/detalle-alquiler', inmueble.id_prop]" class="text-lg md:text-xl font-bold text-gray-900 no-underline hover:text-primary transition-colors line-clamp-1"> {{ fullAddress }} </a>
                     <button pButton icon="pi pi-heart" class="p-button-rounded p-button-text p-button-plain"></button>
                 </div>
 
                 <div class="flex items-baseline gap-2">
-                    <span class="text-2xl font-bold text-primary">{{ inmueble.precioAlquiler | currency:'EUR':'symbol':'1.0-0' }}</span>
+                    <span class="text-2xl font-bold text-primary">{{ inmueble.precio_alquiler | currency:'EUR':'symbol':'1.0-0' }}</span>
                     <span class="text-gray-600 font-medium">/mes</span>
                 </div>
 
-                <div class="text-xs text-gray-500 mb-1">Fianza: {{ inmueble.fianzaAlquiler | currency:'EUR':'symbol':'1.0-0' }}</div>
+                <div class="text-xs text-gray-500 mb-1">Fianza: {{ inmueble.fianza_alquiler | currency:'EUR':'symbol':'1.0-0' }}</div>
 
                 <div class="flex flex-wrap gap-x-4 gap-y-2 text-gray-700 font-medium text-sm md:text-base mb-3">
-                    <span class="flex items-center gap-1"> <i class="pi pi-users"></i> {{ inmueble.nroPersonasAlquiler }} pers. </span>
-                    <span class="flex items-center gap-1"> <i class="pi pi-th-large"></i> {{ inmueble.nroHabitaciones }} hab. </span>
-                    <span class="flex items-center gap-1"> <i class="pi pi-box"></i> {{ inmueble.nroBanos }} baños </span>
-                    <span class="flex items-center gap-1"> <i class="pi pi-expand"></i> {{ inmueble.metrosProp }} m² </span>
-                    <span class="flex items-center gap-1"> <i class="pi pi-arrow-up"></i> Planta {{ inmueble.plantaProp }} </span>
-                    <span *ngIf="inmueble.wifiAlquiler" class="flex items-center gap-1"> <i class="pi pi-wifi"></i> WiFi </span>
+                    <span class="flex items-center gap-1"> <i class="pi pi-users"></i> {{ inmueble.nro_personas_alquiler }} pers. </span>
+                    <span class="flex items-center gap-1"> <i class="pi pi-th-large"></i> {{ inmueble.nro_habitaciones }} hab. </span>
+                    <span class="flex items-center gap-1"> <i class="pi pi-box"></i> {{ inmueble.nro_banos }} baños </span>
+                    <span class="flex items-center gap-1"> <i class="pi pi-expand"></i> {{ inmueble.metros_prop }} m² </span>
+                    <span class="flex items-center gap-1"> <i class="pi pi-arrow-up"></i> Planta {{ inmueble.planta_prop }} </span>
+                    <span *ngIf="inmueble.wifi_alquiler" class="flex items-center gap-1"> <i class="pi pi-wifi"></i> WiFi </span>
                 </div>
 
-                <p class="mt-2 text-gray-600 text-sm md:text-base line-clamp-2 md:line-clamp-3 leading-relaxed">{{ inmueble.descripcionAlquiler }}</p>
+                <p class="mt-2 text-gray-600 text-sm md:text-base line-clamp-2 md:line-clamp-3 leading-relaxed">{{ inmueble.descripcion_alquiler }}</p>
             </div>
 
             <div class="flex justify-between items-center mt-4">
                 <div class="flex gap-2">
-                    <p-tag *ngIf="!inmueble.permiteMascotasAlquiler" icon="pi pi-times" severity="danger" value="Sin mascotas" class="bg-gray-100"></p-tag>
-                    <p-tag *ngIf="inmueble.permitevisitasAlquiler" icon="pi pi-eye" severity="secondary" value="Visitas ok" class="bg-gray-100"></p-tag>
+                    <p-tag *ngIf="!inmueble.permite_mascotas_alquiler" icon="pi pi-times" severity="danger" value="Sin mascotas" class="bg-gray-100"></p-tag>
+                    <p-tag *ngIf="inmueble.permite_visitas_alquiler" icon="pi pi-eye" severity="secondary" value="Visitas ok" class="bg-gray-100"></p-tag>
                 </div>
                 <div class="flex gap-2">
                     <button pButton label="Reservar" icon="pi pi-calendar" class="p-button-outlined p-button-sm md:p-button-md"></button>
