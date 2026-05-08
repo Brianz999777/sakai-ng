@@ -4,7 +4,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { RouterModule } from '@angular/router';
-import { PropiedadAlquiler } from '../../interfaces/inmueble';
+import { TarjetaAlquiler } from '../../interfaces/inmueble';
 
 @Component({
   selector: 'app-alquiler',
@@ -14,15 +14,13 @@ import { PropiedadAlquiler } from '../../interfaces/inmueble';
   styleUrl: './alquiler.scss',
 })
 export class Alquiler {
-  @Input() inmueble!: PropiedadAlquiler;
+  @Input() inmueble!: TarjetaAlquiler;
 
   get fullAddress(): string {
-    return `${this.inmueble.tipo_via_prop} ${this.inmueble.direccion_prop}, ${this.inmueble.numero_prop}`;
+    return this.inmueble.direccion_fisica || 'Dirección no disponible';
   }
 
   get mainPhoto(): string {
-    return this.inmueble.fotos && this.inmueble.fotos.length > 0 
-      ? this.inmueble.fotos[0].url_foto 
-      : 'assets/images/no-photo.jpg';
+    return '/demo/images/galleria/no_photo.png';
   }
 }

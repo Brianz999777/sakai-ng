@@ -59,7 +59,7 @@ export class LogIn {
     this.authService.login(loginRequest).subscribe({
       next: (response) => {
         console.log('Login exitoso:', response);
-        this.router.navigate(['/register']);
+        this.router.navigate(['/ventas']);
       },
       error: (error) => {
         console.error('Error en el login:', error);

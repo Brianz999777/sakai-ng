@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PropiedadVenta, PropiedadAlquiler } from '../interfaces/inmueble';
+import { PropiedadVenta, PropiedadAlquiler, InmuebleVentaDto, TarjetaVenta, TarjetaAlquiler } from '../interfaces/inmueble';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +9,14 @@ import { PropiedadVenta, PropiedadAlquiler } from '../interfaces/inmueble';
 export class InmuebleService {
   private http = inject(HttpClient);
   // Asumiendo que esta es tu URL base para inmuebles (ajústala según tu backend)
-  private readonly baseUrl = 'http://localhost:8080/tupisoya/api/inmuebles';
+  private readonly baseUrl = 'http://localhost:8080/tupisoya/inmuebles';
 
-  getVentas(): Observable<PropiedadVenta[]> {
-    return this.http.get<PropiedadVenta[]>(`${this.baseUrl}/ventas`);
+  getVentas(): Observable<TarjetaVenta[]> {
+    return this.http.get<TarjetaVenta[]>(`${this.baseUrl}/ventas`);
   }
 
-  getAlquileres(): Observable<PropiedadAlquiler[]> {
-    return this.http.get<PropiedadAlquiler[]>(`${this.baseUrl}/alquileres`);
+  getAlquileres(): Observable<TarjetaAlquiler[]> {
+    return this.http.get<TarjetaAlquiler[]>(`${this.baseUrl}/alquiler`);
   }
 
   getVentaById(id: number): Observable<PropiedadVenta> {
@@ -24,14 +24,31 @@ export class InmuebleService {
   }
 
   getAlquilerById(id: number): Observable<PropiedadAlquiler> {
-    return this.http.get<PropiedadAlquiler>(`${this.baseUrl}/alquileres/${id}`);
+    return this.http.get<PropiedadAlquiler>(`${this.baseUrl}/alquiler/${id}`);
   }
 
   insertVenta(venta: PropiedadVenta): Observable<PropiedadVenta> {
-    return this.http.post<PropiedadVenta>(`${this.baseUrl}/ventas`, venta);
+    const payload = { ...venta, type: 'venta' };
+    return this.http.post<PropiedadVenta>(`${this.baseUrl}/ventas`, payload);
+  }
+
+  crearVenta(venta: InmuebleVentaDto): Observable<any> {
+    const payload = { ...venta, type: 'venta' };
+    return this.http.post<any>(`${this.baseUrl}/venta`, payload);
+  }
+
+  updateVenta(id: number, venta: PropiedadVenta): Observable<PropiedadVenta> {
+    const payload = { ...venta, type: 'venta' };
+    return this.http.put<PropiedadVenta>(`${this.baseUrl}/ventas/${id}`, payload);
   }
 
   insertAlquiler(alquiler: PropiedadAlquiler): Observable<PropiedadAlquiler> {
-    return this.http.post<PropiedadAlquiler>(`${this.baseUrl}/alquileres`, alquiler);
+    const payload = { ...alquiler, type: 'alquiler' };
+    return this.http.post<PropiedadAlquiler>(`${this.baseUrl}/alquiler`, payload);
+  }
+
+  updateAlquiler(id: number, alquiler: PropiedadAlquiler): Observable<PropiedadAlquiler> {
+    const payload = { ...alquiler, type: 'alquiler' };
+    return this.http.put<PropiedadAlquiler>(`${this.baseUrl}/alquiler/${id}`, payload);
   }
 }

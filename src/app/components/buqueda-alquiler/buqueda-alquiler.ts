@@ -1,7 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataViewModule } from 'primeng/dataview';
-import { PropiedadAlquiler } from '../../interfaces/inmueble';
+import { TarjetaAlquiler } from '../../interfaces/inmueble';
 import { Alquiler } from '../alquiler/alquiler';
 import { FiltroAlquiler } from '../filtro-alquiler/filtro-alquiler';
 import { InmuebleService } from '../../service/inmueble.service';
@@ -15,20 +15,28 @@ import { InmuebleService } from '../../service/inmueble.service';
 })
 export class BuquedaAlquiler implements OnInit {
   private inmuebleService = inject(InmuebleService);
-  inmuebles: PropiedadAlquiler[] = [];
-  inmueblesFiltrados: PropiedadAlquiler[] = [];
+  private cdr = inject(ChangeDetectorRef);
+  inmuebles: TarjetaAlquiler[] = [];
+  inmueblesFiltrados: TarjetaAlquiler[] = [];
+  filtrosActuales: any = {};
 
   ngOnInit() {
     this.inmuebleService.getAlquileres().subscribe({
       next: (data) => {
         this.inmuebles = data;
-        this.inmueblesFiltrados = data;
+        this.aplicarFiltrosActuales();
       },
       error: (err) => console.error("Error al obtener alquileres", err)
     });
   }
 
   handleFilter(filtros: any) {
+    this.filtrosActuales = filtros || {};
+    this.aplicarFiltrosActuales();
+  }
+
+  aplicarFiltrosActuales() {
+    const filtros = this.filtrosActuales;
     this.inmueblesFiltrados = this.inmuebles.filter(inm => {
       let cumple = true;
 
@@ -37,7 +45,7 @@ export class BuquedaAlquiler implements OnInit {
 
       // Filtro Tipo (Casa/Piso)
       if (filtros.tipos && filtros.tipos.length > 0) {
-        if (!filtros.tipos.includes(inm.tipo_inmueble)) cumple = false;
+        if (inm.tipo_inmueble && !filtros.tipos.includes(inm.tipo_inmueble)) cumple = false;
       }
 
       // Filtro Habitaciones (Checkbox)
@@ -61,11 +69,14 @@ export class BuquedaAlquiler implements OnInit {
       // Filtro Estado
       if (filtros.estado) {
         const esReformado = inm.reformado === true;
-        if (filtros.estado === 'reformado' && !esReformado) cumple = false;
-        if (filtros.estado === 'a_reformar' && esReformado) cumple = false;
+        if (inm.reformado !== undefined) {
+          if (filtros.estado === 'reformado' && !esReformado) cumple = false;
+          if (filtros.estado === 'a_reformar' && esReformado) cumple = false;
+        }
       }
 
       return cumple;
     });
+    this.cdr.detectChanges();
   }
 }

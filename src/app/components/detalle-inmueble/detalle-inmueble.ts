@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PropiedadVenta, PropiedadAlquiler } from '../../interfaces/inmueble';
@@ -45,23 +45,35 @@ export class DetalleInmueble implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private inmuebleService: InmuebleService
+    private inmuebleService: InmuebleService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = +params['id'];
-      const url = this.route.snapshot.url[0].path;
-      this.tipo = url.includes('venta') ? 'venta' : 'alquiler';
+      const path = this.route.snapshot.url.map(s => s.path).join('/');
+      this.tipo = path.includes('venta') ? 'venta' : 'alquiler';
+      console.log('Ruta detectada:', path, '| Tipo:', this.tipo, '| ID:', this.id);
 
       if (this.tipo === 'venta' && this.id) {
+        console.log('Llamando a getVentaById...');
         this.inmuebleService.getVentaById(this.id).subscribe({
-          next: (res) => this.inmuebleVenta = res,
+          next: (res) => {
+            console.log('Respuesta Venta:', res);
+            this.inmuebleVenta = res;
+            this.cdr.detectChanges();
+          },
           error: (err) => console.error("Error obteniendo detalle venta", err)
         });
       } else if (this.tipo === 'alquiler' && this.id) {
+        console.log('Llamando a getAlquilerById...');
         this.inmuebleService.getAlquilerById(this.id).subscribe({
-          next: (res) => this.inmuebleAlquiler = res,
+          next: (res) => {
+            console.log('Respuesta Alquiler:', res);
+            this.inmuebleAlquiler = res;
+            this.cdr.detectChanges();
+          },
           error: (err) => console.error("Error obteniendo detalle alquiler", err)
         });
       }
@@ -70,5 +82,9 @@ export class DetalleInmueble implements OnInit {
 
   get generalInfo() {
     return this.inmuebleVenta || this.inmuebleAlquiler;
+  }
+
+  get fotos() {
+    return [{ url_foto: '/demo/images/galleria/no_photo.png' }];
   }
 }

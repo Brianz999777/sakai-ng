@@ -2,13 +2,13 @@
     <div class="flex flex-col md:flex-row shadow-lg border rounded-lg bg-card overflow-hidden h-full">
         <!-- Imagen -->
         <div class="w-full md:w-4/12 relative cursor-pointer" [routerLink]="['/detalle-venta', inmueble.id_prop]">
-            <img [src]="mainPhoto" [alt]="inmueble.nro_ref_prop" class="w-full h-full object-cover min-h-[200px] md:min-h-[280px]" />
+            <img [src]="mainPhoto" [alt]="'Propiedad ' + inmueble.id_prop" class="w-full h-full object-cover min-h-[200px] md:min-h-[280px]" />
             <div class="absolute top-2 left-2">
-                <p-tag [value]="inmueble.clase_energetica_venta" severity="success" icon="pi pi-bolt"></p-tag>
+                <p-tag [value]="inmueble.clase_energetica_venta || 'En trámite'" severity="success" icon="pi pi-bolt"></p-tag>
             </div>
             <div class="absolute bottom-0 left-0 w-full p-2 bg-black/50 text-white flex justify-between items-center text-sm md:text-base">
-                <span><i class="pi pi-camera mr-1"></i>{{ inmueble.fotos.length }}</span>
-                <span *ngIf="inmueble.reformado"><p-tag value="Reformado" severity="info" [style]="{'font-size': '10px'}"></p-tag></span>
+                <span><i class="pi pi-camera mr-1"></i>1</span>
+                <span *ngIf="inmueble.reforma_venta"><p-tag value="Reformado" severity="info" [style]="{'font-size': '10px'}"></p-tag></span>
             </div>
         </div>
 
@@ -23,18 +23,17 @@
                 <div class="text-2xl font-bold text-primary">{{ inmueble.precio_venta | currency:'EUR':'symbol':'1.0-0' }}</div>
 
                 <div class="flex flex-wrap gap-x-4 gap-y-2 text-gray-700 font-medium text-sm md:text-base">
-                    <span class="flex items-center gap-1"> <i class="pi pi-th-large"></i> {{ inmueble.nro_habitaciones }} hab. </span>
-                    <span class="flex items-center gap-1"> <i class="pi pi-box"></i> {{ inmueble.nro_banos }} baños </span>
+                    <span class="flex items-center gap-1"> <i class="pi pi-th-large"></i> {{ inmueble.nro_habitaciones_venta }} hab. </span>
+                    <span class="flex items-center gap-1"> <i class="pi pi-box"></i> {{ inmueble.nro_banos_prop }} baños </span>
                     <span class="flex items-center gap-1"> <i class="pi pi-expand"></i> {{ inmueble.metros_prop }} m² </span>
                     <span class="flex items-center gap-1"> <i class="pi pi-arrow-up"></i> Planta {{ inmueble.planta_prop }} </span>
                 </div>
 
-                <p class="mt-2 text-gray-600 text-sm md:text-base line-clamp-2 md:line-clamp-3 leading-relaxed">{{ inmueble.descripcion_venta }}</p>
+                <p class="mt-2 text-gray-600 text-sm md:text-base line-clamp-2 md:line-clamp-3 leading-relaxed">{{ inmueble.descripcion_formateada }}</p>
             </div>
 
             <div class="flex justify-between items-center mt-4">
                 <div class="flex gap-2">
-                    <p-tag *ngIf="inmueble.garage_venta" icon="pi pi-car" severity="secondary" value="Garaje" class="bg-gray-100"></p-tag>
                     <p-tag *ngIf="inmueble.aire_acondicionado_venta" icon="pi pi-sun" severity="secondary" value="A/A" class="bg-gray-100"></p-tag>
                 </div>
                 <div class="flex gap-2">

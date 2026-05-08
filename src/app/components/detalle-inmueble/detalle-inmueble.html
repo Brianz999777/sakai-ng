@@ -2,7 +2,7 @@
     <div *ngIf="generalInfo" class="grid grid-cols-12 gap-0">
         <!-- Galería de Fotos (Columna Izquierda o Arriba en Mobile) -->
         <div class="col-span-12 lg:col-span-7 bg-black flex items-center justify-center p-0">
-            <p-galleria [value]="generalInfo.fotos" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '100%'}" [numVisible]="5" [circular]="true" [showItemNavigators]="true" [showThumbnails]="true">
+            <p-galleria [value]="fotos" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '100%'}" [numVisible]="5" [circular]="true" [showItemNavigators]="true" [showThumbnails]="true">
                 <ng-template #item let-item>
                     <img [src]="item.url_foto" style="width: 100%; display: block; height: 500px; object-fit: cover" />
                 </ng-template>
@@ -37,17 +37,17 @@
                             <div class="text-xs text-secondary uppercase">Construidos</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2" *ngIf="generalInfo.nro_habitaciones">
+                    <div class="flex items-center gap-2" *ngIf="tipo === 'venta' && inmuebleVenta?.nro_habitaciones_venta">
                         <i class="pi pi-box text-xl text-primary"></i>
                         <div>
-                            <div class="font-bold text-lg">{{ generalInfo.nro_habitaciones }}</div>
+                            <div class="font-bold text-lg">{{ inmuebleVenta?.nro_habitaciones_venta }}</div>
                             <div class="text-xs text-secondary uppercase">Habitaciones</div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2" *ngIf="generalInfo.nro_banos">
+                    <div class="flex items-center gap-2" *ngIf="generalInfo.nro_banos_prop">
                         <i class="pi pi-th-large text-xl text-primary"></i>
                         <div>
-                            <div class="font-bold text-lg">{{ generalInfo.nro_banos }}</div>
+                            <div class="font-bold text-lg">{{ generalInfo.nro_banos_prop }}</div>
                             <div class="text-xs text-secondary uppercase">Baños</div>
                         </div>
                     </div>
