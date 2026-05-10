@@ -1,5 +1,5 @@
-<div class="p-4 surface-ground min-h-screen">
-    <div class="grid grid-cols-12 gap-6">
+<div class="bg-transparent">
+    <div class="grid grid-cols-12 gap-6 pt-4">
         <!-- Panel de Filtros -->
         <div class="col-span-12 md:col-span-3">
             <app-filtro-alquiler (onFilterChange)="handleFilter($event)"></app-filtro-alquiler>
@@ -9,17 +9,16 @@
         <div class="col-span-12 md:col-span-9">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-800 m-0">Alquiler de viviendas</h1>
-                    <p class="text-gray-500 m-0 mt-1">Zaragoza y alrededores</p>
+                    <p class="text-surface-500 m-0 font-medium">Zaragoza y alrededores</p>
                 </div>
-                <span class="bg-primary-50 text-primary-700 px-3 py-1 rounded-full font-semibold"> {{ inmueblesFiltrados.length }} alquileres encontrados </span>
+                <span class="bg-primary-50 text-primary-700 px-4 py-2 rounded-2xl text-sm font-bold"> {{ inmueblesFiltrados.length }} alquileres encontrados </span>
             </div>
 
             <p-dataView #dv [value]="inmueblesFiltrados" layout="list" [rows]="10" [paginator]="true">
                 <ng-template #list let-items>
                     <div class="flex flex-col gap-4">
                         <div *ngFor="let item of items">
-                            <app-alquiler [inmueble]="item"></app-alquiler>
+                            <app-alquiler [inmueble]="item" (onVerDetalle)="seleccionarInmueble($event)"></app-alquiler>
                         </div>
                     </div>
                 </ng-template>

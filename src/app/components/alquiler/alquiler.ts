@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -15,6 +15,11 @@ import { TarjetaAlquiler } from '../../interfaces/inmueble';
 })
 export class Alquiler {
   @Input() inmueble!: TarjetaAlquiler;
+  @Output() onVerDetalle = new EventEmitter<number>();
+
+  verDetalle() {
+    this.onVerDetalle.emit(this.inmueble.id_prop);
+  }
 
   get fullAddress(): string {
     return this.inmueble.direccion_fisica || 'Dirección no disponible';

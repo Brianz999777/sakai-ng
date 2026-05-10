@@ -46,6 +46,8 @@ export interface TarjetaAlquiler {
     nro_habitaciones?: number;
     nro_banos?: number;
     reformado?: boolean;
+    provincia_prop?: string;
+    cp_prop?: string;
 }
 
 export interface TarjetaVenta {
@@ -66,6 +68,8 @@ export interface TarjetaVenta {
     nro_habitaciones?: number;
     nro_banos?: number;
     reformado?: boolean;
+    provincia_prop?: string;
+    cp_prop?: string;
 }
 
 export interface PropiedadAlquiler extends Propiedad {

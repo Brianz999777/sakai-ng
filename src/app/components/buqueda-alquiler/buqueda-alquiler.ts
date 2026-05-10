@@ -1,5 +1,6 @@
-import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, inject, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { DataViewModule } from 'primeng/dataview';
 import { TarjetaAlquiler } from '../../interfaces/inmueble';
 import { Alquiler } from '../alquiler/alquiler';
@@ -13,14 +14,31 @@ import { InmuebleService } from '../../service/inmueble.service';
   templateUrl: './buqueda-alquiler.html',
   styleUrl: './buqueda-alquiler.scss',
 })
-export class BuquedaAlquiler implements OnInit {
+export class BuquedaAlquiler implements OnInit, OnChanges {
+  @Input() terminoBusquedaInput: string | null = null;
+  @Output() onInmuebleSelected = new EventEmitter<{id: number, tipo: 'venta' | 'alquiler'}>();
+
   private inmuebleService = inject(InmuebleService);
   private cdr = inject(ChangeDetectorRef);
+  private route = inject(ActivatedRoute);
+  
   inmuebles: TarjetaAlquiler[] = [];
   inmueblesFiltrados: TarjetaAlquiler[] = [];
   filtrosActuales: any = {};
+  terminoBusqueda: string | null = null;
+
+  seleccionarInmueble(id: number) {
+    this.onInmuebleSelected.emit({id, tipo: 'alquiler'});
+  }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['q']) {
+        this.terminoBusqueda = params['q'].toLowerCase();
+        this.aplicarFiltrosActuales();
+      }
+    });
+
     this.inmuebleService.getAlquileres().subscribe({
       next: (data) => {
         this.inmuebles = data;
@@ -28,6 +46,13 @@ export class BuquedaAlquiler implements OnInit {
       },
       error: (err) => console.error("Error al obtener alquileres", err)
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['terminoBusquedaInput']) {
+      this.terminoBusqueda = this.terminoBusquedaInput ? this.terminoBusquedaInput.toLowerCase() : null;
+      this.aplicarFiltrosActuales();
+    }
   }
 
   handleFilter(filtros: any) {
@@ -39,6 +64,18 @@ export class BuquedaAlquiler implements OnInit {
     const filtros = this.filtrosActuales;
     this.inmueblesFiltrados = this.inmuebles.filter(inm => {
       let cumple = true;
+
+      // Filtro de Búsqueda General (Provincia, CP, Dirección)
+      if (this.terminoBusqueda) {
+        const busqueda = this.terminoBusqueda;
+        const provincia = (inm.provincia_prop || '').toLowerCase();
+        const cp = (inm.cp_prop || '').toLowerCase();
+        const direccion = (inm.direccion_fisica || '').toLowerCase();
+        
+        if (!provincia.includes(busqueda) && !cp.includes(busqueda) && !direccion.includes(busqueda)) {
+          cumple = false;
+        }
+      }
 
       // Filtro Precio Máximo
       if (filtros.precioMax && inm.precio_alquiler > filtros.precioMax) cumple = false;

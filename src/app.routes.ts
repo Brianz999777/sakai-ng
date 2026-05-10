@@ -11,6 +11,11 @@ import { BuquedaVenta } from './app/components/buqueda-venta/buqueda-venta';
 import { BuquedaAlquiler } from './app/components/buqueda-alquiler/buqueda-alquiler';
 import { DetalleInmueble } from './app/components/detalle-inmueble/detalle-inmueble';
 
+import { Nosotros } from './app/pages/nosotros/nosotros';
+import { Servicios } from './app/pages/servicios/servicios';
+import { Contacto } from './app/pages/contacto/contacto';
+import { Valoracion } from './app/pages/valoracion/valoracion';
+
 export const appRoutes: Routes = [
     {
         path: '',
@@ -27,8 +32,11 @@ export const appRoutes: Routes = [
         ]
     },
     { path: 'landing', component: Landing },
+    { path: 'nosotros', component: Nosotros },
+    { path: 'servicios', component: Servicios },
+    { path: 'contacto', component: Contacto },
     { path: 'notfound', component: Notfound },
-    { path: 'register', component:Register },
-    { path: 'login', component:LogIn },
+    { path: 'register', component: Register },
+    { path: 'login', component: LogIn },
     { path: '**', redirectTo: '/notfound' }
 ];

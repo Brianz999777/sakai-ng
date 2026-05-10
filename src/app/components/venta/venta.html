@@ -1,7 +1,7 @@
 <div class="card-inmueble mb-4 px-2">
     <div class="flex flex-col md:flex-row shadow-lg border rounded-lg bg-card overflow-hidden h-full">
         <!-- Imagen -->
-        <div class="w-full md:w-4/12 relative cursor-pointer" [routerLink]="['/detalle-venta', inmueble.id_prop]">
+        <div class="w-full md:w-4/12 relative cursor-pointer" (click)="verDetalle()">
             <img [src]="mainPhoto" [alt]="'Propiedad ' + inmueble.id_prop" class="w-full h-full object-cover min-h-[200px] md:min-h-[280px]" />
             <div class="absolute top-2 left-2">
                 <p-tag [value]="inmueble.clase_energetica_venta || 'En trámite'" severity="success" icon="pi pi-bolt"></p-tag>
@@ -16,7 +16,7 @@
         <div class="w-full md:w-8/12 p-4 flex flex-col justify-between">
             <div class="flex flex-col gap-2">
                 <div class="flex justify-between items-start">
-                    <a [routerLink]="['/detalle-venta', inmueble.id_prop]" class="text-lg md:text-xl font-bold text-gray-900 no-underline hover:text-primary transition-colors line-clamp-1"> {{ fullAddress }} </a>
+                    <a href="javascript:void(0)" (click)="verDetalle()" class="text-lg md:text-xl font-bold text-gray-900 no-underline hover:text-primary transition-colors line-clamp-1"> {{ fullAddress }} </a>
                     <button pButton icon="pi pi-heart" class="p-button-rounded p-button-text p-button-plain"></button>
                 </div>
 
