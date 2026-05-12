@@ -1,7 +1,8 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input, inject, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, inject, ChangeDetectorRef, Output, EventEmitter, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { DataViewModule } from 'primeng/dataview';
+import { ButtonModule } from 'primeng/button';
 import { TarjetaAlquiler } from '../../interfaces/inmueble';
 import { Alquiler } from '../alquiler/alquiler';
 import { FiltroAlquiler } from '../filtro-alquiler/filtro-alquiler';
@@ -10,11 +11,12 @@ import { InmuebleService } from '../../service/inmueble.service';
 @Component({
   selector: 'app-buqueda-alquiler',
   standalone: true,
-  imports: [CommonModule, DataViewModule, Alquiler, FiltroAlquiler],
+  imports: [CommonModule, DataViewModule, ButtonModule, Alquiler, FiltroAlquiler],
   templateUrl: './buqueda-alquiler.html',
   styleUrl: './buqueda-alquiler.scss',
 })
 export class BuquedaAlquiler implements OnInit, OnChanges {
+  @ViewChild('filtroAlquiler') filtroAlquiler!: FiltroAlquiler;
   @Input() terminoBusquedaInput: string | null = null;
   @Output() onInmuebleSelected = new EventEmitter<{id: number, tipo: 'venta' | 'alquiler'}>();
 
@@ -58,6 +60,12 @@ export class BuquedaAlquiler implements OnInit, OnChanges {
   handleFilter(filtros: any) {
     this.filtrosActuales = filtros || {};
     this.aplicarFiltrosActuales();
+  }
+
+  limpiarFiltros() {
+    if (this.filtroAlquiler) {
+      this.filtroAlquiler.limpiarFiltros();
+    }
   }
 
   aplicarFiltrosActuales() {

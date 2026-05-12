@@ -1,39 +1,118 @@
-.card {
-    background: var(--surface-card);
-    border-radius: 12px;
+:host {
+    display: block;
+    height: 100%;
+}
+
+.filters-container {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 2rem;
+    padding: 2rem;
     position: sticky;
-    top: 1rem;
+    top: 2rem;
+    box-shadow: 0 10px 40px -10px rgba(26, 38, 47, 0.08);
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 20px 60px -15px rgba(26, 38, 47, 0.12);
+        border-color: rgba(230, 238, 156, 0.5);
+    }
 }
 
-h4 {
-    font-size: 0.95rem;
-    color: var(--surface-700);
+.filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
 }
 
+.header-dot {
+    width: 12px;
+    height: 12px;
+    background: #E6EE9C;
+    border-radius: 3px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 0 4px rgba(230, 238, 156, 0.2);
+}
+
+.filters-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.group-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #94a3b8;
+}
+
+.section-divider {
+    height: 1px;
+    background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
+}
+
+/* PrimeNG Overrides */
 ::ng-deep {
-    .p-selectbutton .p-button {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.9rem;
-    }
-    
-    .p-inputnumber-input {
-        width: 100% !important;
-        font-size: 0.9rem;
+    .custom-input-number {
+        .p-inputnumber-input {
+            width: 100% !important;
+            padding: 0.85rem 1.25rem !important;
+            background: #f8fafc !important;
+            border: 2px solid #f1f5f9 !important;
+            border-radius: 1.25rem !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            color: #1A262F !important;
+            transition: all 0.3s ease !important;
+
+            &:focus {
+                background: #fff !important;
+                border-color: #1A262F !important;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05) !important;
+            }
+        }
     }
 
-    .p-accordion p-accordiontab .p-accordion-header .p-accordion-header-link {
-        background: transparent;
-        border: none;
-        padding-left: 0;
-        padding-right: 0;
-        font-weight: 600;
-        color: var(--surface-700);
+    .p-checkbox .p-checkbox-box {
+        border-radius: 8px !important;
+        border: 2px solid #e2e8f0 !important;
+        background: #fff !important;
+        transition: all 0.2s ease !important;
+
+        &.p-highlight {
+            background: #1A262F !important;
+            border-color: #1A262F !important;
+        }
+
+        .p-checkbox-icon {
+            color: #E6EE9C !important;
+            font-weight: 900 !important;
+        }
     }
 
-    .p-accordion p-accordiontab .p-accordion-content {
-        background: transparent;
-        border: none;
-        padding-left: 0;
-        padding-right: 0;
+    .p-radiobutton .p-radiobutton-box {
+        border: 2px solid #e2e8f0 !important;
+        background: #fff !important;
+        transition: all 0.2s ease !important;
+
+        &.p-highlight {
+            background: #1A262F !important;
+            border-color: #1A262F !important;
+            
+            .p-radiobutton-icon {
+                background: #E6EE9C !important;
+            }
+        }
     }
 }

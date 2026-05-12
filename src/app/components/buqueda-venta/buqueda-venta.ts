@@ -1,7 +1,8 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input, inject, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, inject, ChangeDetectorRef, Output, EventEmitter, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { DataViewModule } from 'primeng/dataview';
+import { ButtonModule } from 'primeng/button';
 import { TarjetaVenta } from '../../interfaces/inmueble';
 import { Venta } from '../venta/venta';
 import { FiltroVenta } from '../filtro-venta/filtro-venta';
@@ -10,11 +11,12 @@ import { InmuebleService } from '../../service/inmueble.service';
 @Component({
   selector: 'app-buqueda-venta',
   standalone: true,
-  imports: [CommonModule, DataViewModule, Venta, FiltroVenta],
+  imports: [CommonModule, DataViewModule, ButtonModule, Venta, FiltroVenta],
   templateUrl: './buqueda-venta.html',
   styleUrl: './buqueda-venta.scss',
 })
 export class BuquedaVenta implements OnInit, OnChanges {
+  @ViewChild('filtroVenta') filtroVenta!: FiltroVenta;
   @Input() terminoBusquedaInput: string | null = null;
 
   private inmuebleService = inject(InmuebleService);
@@ -59,6 +61,12 @@ export class BuquedaVenta implements OnInit, OnChanges {
   handleFilter(filtros: any) {
     this.filtrosActuales = filtros || {};
     this.aplicarFiltrosActuales();
+  }
+
+  limpiarFiltros() {
+    if (this.filtroVenta) {
+      this.filtroVenta.limpiarFiltros();
+    }
   }
 
   aplicarFiltrosActuales() {

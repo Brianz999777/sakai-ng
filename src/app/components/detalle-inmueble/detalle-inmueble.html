@@ -1,190 +1,256 @@
-<div class="detalle-content w-full" *ngIf="generalInfo">
-    <!-- HEADER SECTION -->
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
-        <div class="flex-1">
-            <div class="flex items-center gap-3 mb-3">
-                <p-tag [value]="tipo === 'venta' ? 'Venta' : 'Alquiler'" severity="success" class="text-xs uppercase"></p-tag>
-                <span class="text-sm font-bold text-surface-500 uppercase tracking-tighter">Ref: {{ generalInfo.nro_ref_prop }}</span>
-            </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold text-surface-900 m-0 mb-2 tracking-tight">{{ generalInfo.tipo_via_prop }} en {{ generalInfo.direccion_prop }}</h1>
-            <p class="text-lg text-surface-500 flex items-center gap-2">
-                <i class="pi pi-map-marker text-primary"></i>
-                {{ generalInfo.provincia_prop }} ({{ generalInfo.cp_prop }}), España
-            </p>
-        </div>
-        <div class="flex gap-3">
-            <button pButton icon="pi pi-share-alt" class="p-button-rounded p-button-text p-button-secondary bg-surface-100"></button>
-            <button pButton icon="pi pi-heart" class="p-button-rounded p-button-text p-button-secondary bg-surface-100"></button>
-        </div>
+<!-- ================================ -->
+<!-- DETALLE INMUEBLE - VISTA PREMIUM -->
+<!-- ================================ -->
+<div class="detalle-wrapper" *ngIf="generalInfo">
+
+  <!-- ── HERO BANNER con foto principal ── -->
+  <div class="hero-container section-reveal" style="--order: 1">
+    <div class="hero-banner">
+      <img [src]="fotos[0]?.url_foto" class="hero-img" alt="Foto principal del inmueble" />
+      
+      <!-- Gradiente oscuro abajo para leer el título -->
+      <div class="hero-overlay"></div>
+
+      <!-- Badges flotantes -->
+      <div class="hero-badges">
+        <span class="badge-tipo">{{ tipo === 'venta' ? '🏷️ En Venta' : '🔑 En Alquiler' }}</span>
+        <span class="badge-ref">Ref. {{ generalInfo.nro_ref_prop }}</span>
+      </div>
+
+      <!-- Título flotante sobre la imagen -->
+      <div class="hero-title-area">
+        <h1 class="hero-title">{{ generalInfo.tipo_via_prop }} en {{ generalInfo.direccion_prop }}</h1>
+        <p class="hero-location">
+          <i class="pi pi-map-marker"></i>
+          {{ generalInfo.provincia_prop }} ({{ generalInfo.cp_prop }}), España
+        </p>
+      </div>
+
+      <!-- Acciones rápidas -->
+      <div class="hero-actions">
+        <button pButton icon="pi pi-share-alt" class="action-btn" title="Compartir"></button>
+        <button pButton icon="pi pi-heart" class="action-btn" title="Guardar"></button>
+      </div>
     </div>
 
-    <div class="grid grid-cols-12 gap-8">
-        <!-- LEFT COLUMN (8/12) -->
-        <div class="col-span-12 lg:col-span-8 space-y-8">
-            <!-- Gallery Card -->
-            <div class="gallery-card bg-white rounded-3xl shadow-sm border border-surface-100 overflow-hidden">
-                <p-galleria [value]="fotos" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '100%'}" [numVisible]="5" [circular]="true" [showItemNavigators]="true" [showThumbnails]="true">
-                    <ng-template #item let-item>
-                        <img [src]="item.url_foto" class="w-full h-[400px] md:h-[600px] object-cover" />
-                    </ng-template>
-                    <ng-template #thumbnail let-item>
-                        <img [src]="item.url_foto" class="w-20 h-16 object-cover rounded-md block" />
-                    </ng-template>
-                </p-galleria>
-            </div>
-
-            <!-- Lo más destacado -->
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-surface-100">
-                <h2 class="text-2xl font-bold mb-6 text-surface-900">Lo más destacado</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-50">
-                        <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                            <i class="pi pi-expand text-xl text-primary"></i>
-                        </div>
-                        <div>
-                            <div class="text-[10px] text-surface-500 uppercase font-bold tracking-widest">Superficie</div>
-                            <div class="font-bold text-lg">{{ generalInfo.metros_prop }} m²</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-50" *ngIf="tipo === 'venta'">
-                        <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                            <i class="pi pi-home text-xl text-primary"></i>
-                        </div>
-                        <div>
-                            <div class="text-[10px] text-surface-500 uppercase font-bold tracking-widest">Habitaciones</div>
-                            <div class="font-bold text-lg">{{ inmuebleVenta?.nro_habitaciones_venta }}</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-50">
-                        <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                            <i class="pi pi-th-large text-xl text-primary"></i>
-                        </div>
-                        <div>
-                            <div class="text-[10px] text-surface-500 uppercase font-bold tracking-widest">Baños</div>
-                            <div class="font-bold text-lg">{{ generalInfo.nro_banos_prop }}</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-50" *ngIf="tipo === 'alquiler'">
-                        <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                            <i class="pi pi-users text-xl text-primary"></i>
-                        </div>
-                        <div>
-                            <div class="text-[10px] text-surface-500 uppercase font-bold tracking-widest">Capacidad</div>
-                            <div class="font-bold text-lg">{{ inmuebleAlquiler?.nro_personas_alquiler }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sobre esta propiedad -->
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-surface-100">
-                <h2 class="text-2xl font-bold mb-4 text-surface-900">Sobre esta propiedad</h2>
-                <p class="text-lg leading-relaxed text-surface-600 mb-0">{{ tipo === 'venta' ? inmuebleVenta?.descripcion_venta : inmuebleAlquiler?.descripcion_alquiler }}</p>
-            </div>
-
-            <!-- Características Técnicas -->
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-surface-100">
-                <h2 class="text-2xl font-bold mb-6 text-surface-900">Características técnicas</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="feature-item p-4 rounded-xl border border-surface-50 flex items-center justify-between" [class.opacity-30]="!generalInfo.ascensor_prop">
-                        <div class="flex items-center gap-3">
-                            <i class="pi pi-arrow-up text-primary"></i>
-                            <span class="font-bold">Ascensor</span>
-                        </div>
-                        <i class="pi" [ngClass]="generalInfo.ascensor_prop ? 'pi-check-circle text-green-500' : 'pi-times-circle'"></i>
-                    </div>
-                    <div class="feature-item p-4 rounded-xl border border-surface-50 flex items-center justify-between" [class.opacity-30]="!(tipo === 'venta' ? inmuebleVenta?.garage_venta : false)">
-                        <div class="flex items-center gap-3">
-                            <i class="pi pi-car text-primary"></i>
-                            <span class="font-bold">Garaje</span>
-                        </div>
-                        <i class="pi" [ngClass]="(tipo === 'venta' ? inmuebleVenta?.garage_venta : false) ? 'pi-check-circle text-green-500' : 'pi-times-circle'"></i>
-                    </div>
-                    <div class="feature-item p-4 rounded-xl border border-surface-50 flex items-center justify-between" [class.opacity-30]="!(tipo === 'venta' ? inmuebleVenta?.aire_acondicionado_venta : false)">
-                        <div class="flex items-center gap-3">
-                            <i class="pi pi-sun text-primary"></i>
-                            <span class="font-bold">Aire Acondicionado</span>
-                        </div>
-                        <i class="pi" [ngClass]="(tipo === 'venta' ? inmuebleVenta?.aire_acondicionado_venta : false) ? 'pi-check-circle text-green-500' : 'pi-times-circle'"></i>
-                    </div>
-                    <div class="feature-item p-4 rounded-xl border border-surface-50 flex items-center justify-between" [class.opacity-30]="!generalInfo.reformado">
-                        <div class="flex items-center gap-3">
-                            <i class="pi pi-wrench text-primary"></i>
-                            <span class="font-bold">Reformado</span>
-                        </div>
-                        <i class="pi" [ngClass]="generalInfo.reformado ? 'pi-check-circle text-green-500' : 'pi-times-circle'"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Ubicación -->
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-surface-100" *ngIf="mapUrl">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-surface-900 m-0">Ubicación</h2>
-                    <a href="https://maps.google.com" target="_blank" class="text-sm font-bold text-primary hover:underline">Ver en Google Maps</a>
-                </div>
-                <div class="w-full h-[400px] rounded-2xl overflow-hidden shadow-inner relative border border-surface-100">
-                    <iframe [src]="mapUrl" width="100%" height="100%" style="border: 0" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
+    <!-- ── BARRA DE ESTADÍSTICAS (barra pill flotante) ── -->
+    <div class="stats-bar-wrapper">
+      <div class="stats-bar">
+        <div class="stat-pill">
+          <i class="pi pi-expand stat-icon"></i>
+          <div>
+            <span class="stat-label">Superficie</span>
+            <span class="stat-value">{{ generalInfo.metros_prop }} m²</span>
+          </div>
         </div>
-
-        <!-- RIGHT COLUMN (4/12) - Sticky -->
-        <div class="col-span-12 lg:col-span-4 space-y-6">
-            <!-- Price Card -->
-            <div class="price-card p-8 rounded-[2.5rem] text-white shadow-xl relative overflow-hidden" 
-                 style="background: linear-gradient(135deg, #1A262F 0%, #2D3E4B 100%);">
-                <div class="relative z-10">
-                    <div class="text-[10px] opacity-70 font-bold uppercase tracking-[0.2em] mb-2 text-white">Precio de {{ tipo }}</div>
-                    <div class="text-5xl font-black mb-4 text-white">{{ tipo === 'venta' ? (inmuebleVenta?.precio_venta | currency:'EUR':'symbol':'1.0-0') : (inmuebleAlquiler?.precio_alquiler | currency:'EUR':'symbol':'1.0-0') }}</div>
-                    <div class="flex items-center gap-2 text-xs font-bold text-[#E6EE9C]">
-                        <i class="pi pi-percentage"></i>
-                        <span>Financiación disponible desde 450€/mes</span>
-                    </div>
-                </div>
-                <!-- Subtle pattern -->
-                <div class="absolute -right-4 -bottom-4 opacity-20">
-                    <i class="pi pi-home text-9xl text-white"></i>
-                </div>
-            </div>
-
-            <!-- Contact Card -->
-            <div class="bg-white p-8 rounded-[2.5rem] shadow-lg border border-surface-50 space-y-6">
-                <h3 class="text-xl font-bold text-surface-900">Contactar con el anunciante</h3>
-
-                <div class="space-y-4">
-                    <input type="text" pInputText placeholder="Tu nombre" class="w-full p-4 bg-surface-50 border-surface-100 rounded-xl" />
-                    <input type="email" pInputText placeholder="Tu email" class="w-full p-4 bg-surface-50 border-surface-100 rounded-xl" />
-                    <textarea pTextarea rows="4" placeholder="Estoy interesado en este inmueble..." class="w-full p-4 bg-surface-50 border-surface-100 rounded-xl resize-none"></textarea>
-                </div>
-
-                <div class="space-y-3 pt-2">
-                    <button pButton label="Enviar Mensaje" class="w-full py-4 font-bold text-lg rounded-xl shadow-md border-none text-white hover:opacity-90" 
-                            style="background: linear-gradient(135deg, #1A262F 0%, #2D3E4B 100%);"></button>
-                    <button pButton label="Llamar al agente" icon="pi pi-phone" [outlined]="true" class="w-full py-4 font-bold text-lg rounded-xl"></button>
-                </div>
-            </div>
-
-            <!-- Security Advice -->
-            <div class="bg-lime-50 p-6 rounded-2xl border border-lime-100 flex items-start gap-4">
-                <i class="pi pi-shield text-lime-600 mt-1"></i>
-                <p class="text-xs text-lime-800 leading-relaxed font-medium">
-                    <span class="font-black block mb-1">Consejo de seguridad:</span>
-                    Nunca envíes dinero por adelantado sin haber visitado el inmueble y verificado la documentación legal.
-                </p>
-            </div>
+        <div class="stat-pill" *ngIf="tipo === 'venta'">
+          <i class="pi pi-home stat-icon"></i>
+          <div>
+            <span class="stat-label">Habitaciones</span>
+            <span class="stat-value">{{ inmuebleVenta?.nro_habitaciones_venta }}</span>
+          </div>
         </div>
+        <div class="stat-pill">
+          <i class="pi pi-th-large stat-icon"></i>
+          <div>
+            <span class="stat-label">Baños</span>
+            <span class="stat-value">{{ generalInfo.nro_banos_prop }}</span>
+          </div>
+        </div>
+        <div class="stat-pill price-pill">
+          <i class="pi pi-tag stat-icon accent"></i>
+          <div>
+            <span class="stat-label">{{ tipo === 'venta' ? 'Precio venta' : 'Precio/mes' }}</span>
+            <span class="stat-value accent">
+              {{ tipo === 'venta'
+                ? (inmuebleVenta?.precio_venta | currency:'EUR':'symbol':'1.0-0')
+                : (inmuebleAlquiler?.precio_alquiler | currency:'EUR':'symbol':'1.0-0') }}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- ── GRID PRINCIPAL ── -->
+  <div class="main-grid">
+
+    <!-- ════ COLUMNA IZQUIERDA ════ -->
+    <div class="col-left">
+
+      <!-- Galería completa -->
+      <section class="card-section section-reveal" style="--order: 2">
+        <h2 class="section-title">
+          <span class="section-dot"></span>Galería de fotos
+        </h2>
+        <div class="gallery-wrap">
+          <p-galleria
+            [value]="fotos"
+            [responsiveOptions]="responsiveOptions"
+            [containerStyle]="{'max-width': '100%'}"
+            [numVisible]="5"
+            [circular]="true"
+            [showItemNavigators]="true"
+            [showThumbnails]="true">
+            <ng-template #item let-item>
+              <img [src]="item.url_foto" class="gallery-main-img" />
+            </ng-template>
+            <ng-template #thumbnail let-item>
+              <img [src]="item.url_foto" class="gallery-thumb" />
+            </ng-template>
+          </p-galleria>
+        </div>
+      </section>
+
+      <!-- Descripción -->
+      <section class="card-section section-reveal" style="--order: 3">
+        <h2 class="section-title">
+          <span class="section-dot"></span>Sobre esta propiedad
+        </h2>
+        <div class="description-content">
+          <p class="description-text">
+            {{ tipo === 'venta' ? inmuebleVenta?.descripcion_venta : inmuebleAlquiler?.descripcion_alquiler }}
+          </p>
+        </div>
+      </section>
+
+      <!-- Características -->
+      <section class="card-section section-reveal" style="--order: 4">
+        <h2 class="section-title">
+          <span class="section-dot"></span>Características del inmueble
+        </h2>
+        <div class="features-grid">
+
+          <div class="feature-item" [class.feature-inactive]="!generalInfo.ascensor_prop">
+            <div class="feature-icon-wrap">
+              <i class="pi pi-arrow-up"></i>
+            </div>
+            <span class="feature-name">Ascensor</span>
+            <span class="feature-check">
+              <i class="pi" [ngClass]="generalInfo.ascensor_prop ? 'pi-check-circle check-yes' : 'pi-times-circle check-no'"></i>
+            </span>
+          </div>
+
+          <div class="feature-item" [class.feature-inactive]="!(tipo === 'venta' ? inmuebleVenta?.garage_venta : false)">
+            <div class="feature-icon-wrap">
+              <i class="pi pi-car"></i>
+            </div>
+            <span class="feature-name">Garaje</span>
+            <span class="feature-check">
+              <i class="pi" [ngClass]="(tipo === 'venta' ? inmuebleVenta?.garage_venta : false) ? 'pi-check-circle check-yes' : 'pi-times-circle check-no'"></i>
+            </span>
+          </div>
+
+          <div class="feature-item" [class.feature-inactive]="!(tipo === 'venta' ? inmuebleVenta?.aire_acondicionado_venta : false)">
+            <div class="feature-icon-wrap">
+              <i class="pi pi-sun"></i>
+            </div>
+            <span class="feature-name">Aire acondicionado</span>
+            <span class="feature-check">
+              <i class="pi" [ngClass]="(tipo === 'venta' ? inmuebleVenta?.aire_acondicionado_venta : false) ? 'pi-check-circle check-yes' : 'pi-times-circle check-no'"></i>
+            </span>
+          </div>
+
+          <div class="feature-item" [class.feature-inactive]="!generalInfo.reformado">
+            <div class="feature-icon-wrap">
+              <i class="pi pi-wrench"></i>
+            </div>
+            <span class="feature-name">Reformado</span>
+            <span class="feature-check">
+              <i class="pi" [ngClass]="generalInfo.reformado ? 'pi-check-circle check-yes' : 'pi-times-circle check-no'"></i>
+            </span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Mapa -->
+      <section class="card-section section-reveal" style="--order: 5" *ngIf="mapUrl">
+        <div class="section-title-row">
+          <h2 class="section-title" style="margin:0">
+            <span class="section-dot"></span>Ubicación
+          </h2>
+          <a href="https://maps.google.com" target="_blank" class="map-link">
+            Ver en Google Maps <i class="pi pi-external-link"></i>
+          </a>
+        </div>
+        <div class="map-container">
+          <iframe [src]="mapUrl" width="100%" height="100%" style="border:0" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </section>
+
+    </div><!-- /col-left -->
+
+    <!-- ════ COLUMNA DERECHA (sticky) ════ -->
+    <div class="col-right">
+
+      <!-- Tarjeta de precio -->
+      <div class="price-card section-reveal" style="--order: 2">
+        <div class="price-label">Precio de {{ tipo }}</div>
+        <div class="price-amount">
+          {{ tipo === 'venta'
+            ? (inmuebleVenta?.precio_venta | currency:'EUR':'symbol':'1.0-0')
+            : (inmuebleAlquiler?.precio_alquiler | currency:'EUR':'symbol':'1.0-0') }}
+          <span *ngIf="tipo === 'alquiler'" class="price-unit">/mes</span>
+        </div>
+        <div class="price-finance">
+          <i class="pi pi-percentage"></i>
+          Financiación disponible desde 450€/mes
+        </div>
+        <!-- precio por m² -->
+        <div class="price-m2" *ngIf="generalInfo.metros_prop && tipo === 'venta' && inmuebleVenta?.precio_venta">
+          {{ (inmuebleVenta!.precio_venta / generalInfo.metros_prop) | number:'1.0-0' }} €/m²
+        </div>
+        <!-- decorativo -->
+        <div class="price-deco"><i class="pi pi-home"></i></div>
+      </div>
+
+      <!-- Tarjeta de contacto -->
+      <div class="contact-card section-reveal" style="--order: 3">
+        <h3 class="contact-title">
+          <i class="pi pi-send"></i> Contactar con el anunciante
+        </h3>
+        <div class="contact-fields">
+          <div class="input-group">
+            <label>Tu nombre</label>
+            <input type="text" pInputText placeholder="Ej: María García" class="custom-input" />
+          </div>
+          <div class="input-group">
+            <label>Tu email</label>
+            <input type="email" pInputText placeholder="email@ejemplo.com" class="custom-input" />
+          </div>
+          <div class="input-group">
+            <label>Mensaje</label>
+            <textarea pTextarea rows="3" placeholder="Estoy interesado en este inmueble..." class="custom-input resize-none"></textarea>
+          </div>
+        </div>
+        <div class="contact-btns">
+          <button pButton label="Enviar mensaje" icon="pi pi-send" class="btn-primary"></button>
+          <button pButton label="Llamar al agente" icon="pi pi-phone" class="btn-outline"></button>
+        </div>
+      </div>
+
+      <!-- Consejo de seguridad -->
+      <div class="security-card section-reveal" style="--order: 4">
+        <div class="security-icon">
+          <i class="pi pi-shield"></i>
+        </div>
+        <div>
+          <p class="security-title">Consejo de seguridad</p>
+          <p class="security-text">Nunca envíes dinero por adelantado sin haber visitado el inmueble y verificado la documentación legal.</p>
+        </div>
+      </div>
+
+    </div><!-- /col-right -->
+  </div><!-- /main-grid -->
 </div>
 
-<!-- Error State -->
-<div *ngIf="!generalInfo" class="p-8 text-center py-20 bg-white min-h-screen">
-    <div class="max-w-md mx-auto">
-        <div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <i class="pi pi-exclamation-circle text-4xl"></i>
-        </div>
-        <h2 class="text-3xl font-black text-surface-900 mb-2">Inmueble no encontrado</h2>
-        <p class="text-surface-500 mb-8">Lo sentimos, la propiedad que buscas ya no está disponible o el enlace es incorrecto.</p>
-        <button pButton label="Volver al buscador" icon="pi pi-arrow-left" class="p-button-lg rounded-2xl bg-surface-900 border-none" (click)="volver()"></button>
-    </div>
+<!-- ── ESTADO DE ERROR ── -->
+<div *ngIf="!generalInfo" class="error-state">
+  <div class="error-icon">
+    <i class="pi pi-exclamation-circle"></i>
+  </div>
+  <h2 class="error-title">Inmueble no encontrado</h2>
+  <p class="error-text">Lo sentimos, la propiedad que buscas ya no está disponible o el enlace es incorrecto.</p>
+  <button pButton label="Volver al buscador" icon="pi pi-arrow-left" class="btn-primary" (click)="volver()"></button>
 </div>

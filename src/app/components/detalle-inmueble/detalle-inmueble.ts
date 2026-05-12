@@ -120,6 +120,9 @@ export class DetalleInmueble implements OnInit, OnChanges {
   }
 
   get fotos() {
+    if (this.generalInfo?.fotos && this.generalInfo.fotos.length > 0) {
+      return this.generalInfo.fotos;
+    }
     return [{ url_foto: '/demo/images/galleria/no_photo.png' }];
   }
 }

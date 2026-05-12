@@ -134,10 +134,12 @@ import { DetalleInmueble } from '../../components/detalle-inmueble/detalle-inmue
                         </div>
 
                         <!-- Header de Detalle -->
-                        <div *ngIf="verDetalleActivo" class="mb-10 pb-6 border-b border-surface-100">
-                            <button pButton icon="pi pi-arrow-left" label="Volver a los resultados" 
-                                    class="p-button-text p-button-plain font-black text-surface-500 hover:text-primary transition-all p-0" 
+                        <div *ngIf="verDetalleActivo" class="mb-12">
+                            <button pButton label="Volver a los resultados" 
+                                    class="p-button-text p-button-plain font-black text-surface-400 hover:text-primary transition-all p-0 flex items-center gap-2 group" 
                                     (click)="volver()">
+                                <i class="pi pi-arrow-left transition-transform group-hover:-translate-x-1"></i>
+                                <span>Volver a los resultados</span>
                             </button>
                         </div>
 
