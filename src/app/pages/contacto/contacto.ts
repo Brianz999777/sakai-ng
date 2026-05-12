@@ -12,7 +12,7 @@ import { FooterWidget } from '../landing/components/footerwidget';
         <topbar-widget class="py-6 px-6 mx-0 md:mx-12 lg:mx-20 lg:px-20 flex items-center justify-between relative lg:static" />
         <div class="flex-1">
             <!-- Hero Contact -->
-            <section class="py-20" style="background-color: #E6EE9C;">
+            <section class="py-20" style="background-color: #D4E157;">
                 <div class="container mx-auto px-6 text-center">
                     <h1 class="text-6xl font-bold mb-4 text-gray-900">Estamos aquí para ayudarte</h1>
                     <p class="text-2xl text-gray-700">Resuelve tus dudas en minutos con nuestro equipo de expertos.</p>
@@ -58,7 +58,7 @@ import { FooterWidget } from '../landing/components/footerwidget';
                                 </div>
                             </div>
 
-                            <div class="p-8 rounded-3xl shadow-2xl" style="background-color: #E6EE9C;">
+                            <div class="p-8 rounded-3xl shadow-2xl" style="background-color: #D4E157;">
                                 <h4 class="text-2xl font-bold mb-4 text-gray-900">¿Eres propietario?</h4>
                                 <p class="mb-6 text-gray-700">Publica tu inmueble gratis y empieza a recibir ofertas hoy mismo.</p>
                                 <button class="w-full py-4 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors">Publicar Anuncio</button>

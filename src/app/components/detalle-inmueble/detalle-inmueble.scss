@@ -1,14 +1,14 @@
 /* ===================================================
    PALETA DEL LANDING Y VARIABLES DE DISEÑO
    --dark:  #1A262F  /  --dark-glass: rgba(26, 38, 47, 0.85)
-   --lime:  #E6EE9C  /  --lime-glass: rgba(230, 238, 156, 0.9)
+   --lime:  #D4E157  /  --lime-glass: rgba(212, 225, 87, 0.9)
    =================================================== */
 
 :host {
   display: block;
   --primary-dark: #1A262F;
   --secondary-dark: #2D3E4B;
-  --accent-lime: #E6EE9C;
+  --accent-lime: #D4E157;
   --border-radius-xl: 2.5rem;
   --border-radius-lg: 1.5rem;
   --glass-bg: rgba(255, 255, 255, 0.95);
@@ -313,7 +313,7 @@
   border-radius: 4px;
   background: var(--accent-lime);
   transform: rotate(45deg);
-  box-shadow: 0 0 0 5px rgba(230, 238, 156, 0.2);
+  box-shadow: 0 0 0 5px rgba(212, 225, 87, 0.2);
 }
 
 /* Galería */
@@ -468,13 +468,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(230, 238, 156, 0.15);
+  background: rgba(212, 225, 87, 0.15);
   padding: 0.75rem 1.25rem;
   border-radius: 1rem;
   color: var(--accent-lime);
   font-weight: 700;
   font-size: 0.9rem;
-  border: 1px solid rgba(230, 238, 156, 0.2);
+  border: 1px solid rgba(212, 225, 87, 0.2);
 }
 
 .price-deco {

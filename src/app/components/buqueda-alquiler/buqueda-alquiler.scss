@@ -43,7 +43,7 @@
 .count-number {
     font-size: 1.25rem;
     font-weight: 900;
-    color: #E6EE9C;
+    color: #D4E157;
 }
 
 .count-text {
@@ -119,12 +119,12 @@
 
             &.p-highlight {
                 background: #1A262F !important;
-                color: #E6EE9C !important;
+                color: #D4E157 !important;
                 border-color: #1A262F !important;
             }
 
             &:hover:not(.p-highlight) {
-                border-color: #E6EE9C !important;
+                border-color: #D4E157 !important;
                 background: #f9fce6 !important;
             }
         }

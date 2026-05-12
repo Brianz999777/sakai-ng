@@ -7,8 +7,8 @@
         transform: translateY(-8px);
 
         .card-inner {
-            box-shadow: 0 30px 60px -15px rgba(26, 38, 47, 0.15);
-            border-color: rgba(230, 238, 156, 0.4);
+            box-shadow: 0 30px 60px -15px rgba(26, 38, 47, 0.2);
+            border-color: #D4E157;
         }
 
         .property-img {
@@ -22,6 +22,7 @@
     flex-direction: row;
     background: #ffffff;
     border: 1.5px solid #f1f5f9;
+    border-top: 4px solid #D4E157;
     border-radius: 2rem;
     overflow: hidden;
     height: 100%;
@@ -60,7 +61,7 @@
 }
 
 .energy-badge {
-    background: #E6EE9C;
+    background: #D4E157;
     color: #1A262F;
     font-size: 0.7rem;
     font-weight: 800;
@@ -95,7 +96,7 @@
     bottom: 1rem;
     right: 1rem;
     background: #1A262F;
-    color: #E6EE9C;
+    color: #D4E157;
     font-size: 0.65rem;
     font-weight: 800;
     padding: 0.4rem 0.8rem;
@@ -226,6 +227,6 @@
 
     &:hover {
         background: #1A262F !important;
-        color: #E6EE9C !important;
+        color: #D4E157 !important;
     }
 }

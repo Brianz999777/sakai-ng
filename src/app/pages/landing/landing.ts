@@ -36,109 +36,109 @@ import { DetalleInmueble } from '../../components/detalle-inmueble/detalle-inmue
                 <topbar-widget class="py-6 px-6 mx-0 md:mx-12 lg:mx-20 lg:px-20 flex items-center justify-between relative lg:static" />
                 
                 <!-- HERO (Solo en inicio) -->
-                <div id="hero" class="flex flex-col items-center justify-center pt-28 pb-32 px-6 lg:px-20 overflow-hidden"
-                     style="background: linear-gradient(135deg, #E6EE9C 0%, #ffffff 100%); border-bottom: 1px solid #dce775;" *ngIf="!buscando && !verDetalleActivo">
-                    <h1 class="text-6xl md:text-7xl font-black text-[#1A262F] mb-4 text-center tracking-tighter" style="font-family: 'Inter', sans-serif;">
-                        Tu hogar, <span class="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">a un clic.</span>
+                <div id="hero" class="hero-section flex flex-col items-center justify-center pt-32 pb-40 px-6 lg:px-20 overflow-hidden" *ngIf="!buscando && !verDetalleActivo">
+                    <div class="hero-bg-overlay"></div>
+                    
+                    <h1 class="hero-title text-6xl md:text-8xl font-black text-[#1A262F] mb-6 text-center tracking-tighter relative z-10">
+                        Tu hogar, <span class="text-[#D4E157] drop-shadow-[0_4px_12px_rgba(212,225,87,0.3)]">a un clic.</span>
                     </h1>
-                    <p class="text-xl text-[#1A262F]/80 mb-12 text-center max-w-2xl font-bold">
-                        Encuentra la propiedad perfecta en la mejor zona de Zaragoza con la tecnología de TuPisoYa.
+                    <p class="hero-subtitle text-xl md:text-2xl text-[#1A262F]/70 mb-14 text-center max-w-3xl font-bold relative z-10">
+                        Encuentra la propiedad perfecta en Zaragoza con la tecnología inteligente de TuPisoYa.
                     </p>
                     
-                    <div class="bg-white/95 backdrop-blur-2xl p-4 rounded-3xl shadow-[0_30px_60px_rgba(26,38,47,0.15)] flex flex-col md:flex-row items-center gap-4 w-full max-w-5xl border border-white">
+                    <div class="search-container-premium bg-white/60 backdrop-blur-3xl p-5 rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(26,38,47,0.2),0_0_0_1px_rgba(212,225,87,0.3)] flex flex-col md:flex-row items-center gap-4 w-full max-w-6xl border border-white/80 relative z-10">
                         <!-- Toggle Options -->
-                        <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl h-14 w-full md:w-auto">
-                            <button class="flex-1 px-8 h-full rounded-xl font-bold transition-all duration-300" 
-                                    [ngClass]="{'text-white shadow-lg': operacion === 'comprar', 'text-slate-500 hover:text-slate-700': operacion !== 'comprar'}" 
-                                    [style.background]="operacion === 'comprar' ? 'linear-gradient(135deg, #1A262F 0%, #2D3E4B 100%)' : 'transparent'"
-                                    (click)="operacion = 'comprar'" style="min-width: 130px;">Comprar</button>
-                            <button class="flex-1 px-8 h-full rounded-xl font-bold transition-all duration-300" 
-                                    [ngClass]="{'text-white shadow-lg': operacion === 'alquilar', 'text-slate-500 hover:text-slate-700': operacion !== 'alquilar'}" 
-                                    [style.background]="operacion === 'alquilar' ? 'linear-gradient(135deg, #1A262F 0%, #2D3E4B 100%)' : 'transparent'"
-                                    (click)="operacion = 'alquilar'" style="min-width: 130px;">Alquilar</button>
+                        <div class="toggle-group-premium flex items-center bg-gray-900/5 p-1.5 rounded-3xl h-16 w-full md:w-auto">
+                            <button class="toggle-btn-premium flex-1 px-10 h-full rounded-[1.25rem] font-black transition-all duration-500" 
+                                    [ngClass]="{'active': operacion === 'comprar'}" 
+                                    (click)="operacion = 'comprar'">Comprar</button>
+                            <button class="toggle-btn-premium flex-1 px-10 h-full rounded-[1.25rem] font-black transition-all duration-500" 
+                                    [ngClass]="{'active': operacion === 'alquilar'}" 
+                                    (click)="operacion = 'alquilar'">Alquilar</button>
                         </div>
                         
-                        <div class="flex-1 flex flex-col md:flex-row gap-4 w-full">
-                            <select [(ngModel)]="tipoSeleccionado" class="h-14 w-full md:w-48 border-none bg-slate-50 dark:bg-slate-800 text-[#1A262F] dark:text-white font-bold outline-none px-4 rounded-2xl focus:ring-2 focus:ring-[#E6EE9C] transition-all cursor-pointer">
-                                <option *ngFor="let tipo of tiposInmueble" [value]="tipo.value">{{ tipo.label }}</option>
-                            </select>
+                        <div class="inputs-row-premium flex-1 flex flex-col md:flex-row gap-4 w-full">
+                            <div class="custom-select-wrap flex-1">
+                                <select [(ngModel)]="tipoSeleccionado" class="premium-input h-16 w-full font-bold outline-none px-6 rounded-3xl appearance-none cursor-pointer">
+                                    <option *ngFor="let tipo of tiposInmueble" [value]="tipo.value">{{ tipo.label }}</option>
+                                </select>
+                            </div>
                             
-                            <div class="relative flex-1 h-14 w-full bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center px-4 focus-within:ring-2 focus-within:ring-[#E6EE9C] transition-all">
-                                <i class="pi pi-map-marker text-[#1A262F] mr-3"></i>
-                                <input type="text" pInputText [(ngModel)]="terminoBusqueda" placeholder="Ciudad, barrio o código postal..." class="w-full h-full border-none shadow-none bg-transparent font-bold p-0 text-[#1A262F] dark:text-white" (keyup.enter)="ejecutarBusqueda()" />
+                            <div class="search-input-wrap flex-[2] relative h-16 w-full bg-white/40 rounded-3xl flex items-center px-6 border-2 border-transparent focus-within:border-[#1A262F]/10 transition-all">
+                                <i class="pi pi-map-marker text-[#1A262F] mr-4 text-xl"></i>
+                                <input type="text" pInputText [(ngModel)]="terminoBusqueda" placeholder="Ciudad, barrio o código postal..." class="w-full h-full border-none shadow-none bg-transparent font-black p-0 text-[#1A262F]" (keyup.enter)="ejecutarBusqueda()" />
                             </div>
                         </div>
                         
-                        <button pButton pRipple label="Buscar" icon="pi pi-search" 
-                                class="h-14 px-10 font-bold rounded-2xl shadow-xl border-none text-white hover:opacity-90 transition-all" 
-                                style="background: linear-gradient(135deg, #1A262F 0%, #2D3E4B 100%);"
-                                (click)="ejecutarBusqueda()"></button>
+                        <button pRipple (click)="ejecutarBusqueda()" class="btn-search-premium h-16 px-12 font-black rounded-3xl text-white shadow-2xl flex items-center gap-3">
+                            <i class="pi pi-search text-xl"></i>
+                            <span>Buscar</span>
+                        </button>
                     </div>
                 </div>
 
                 <!-- SECCIONES INFORMATIVAS (Solo en inicio) -->
-                <div class="px-6 lg:px-20 py-12 space-y-20 bg-white dark:bg-surface-900" *ngIf="!buscando && !verDetalleActivo">
+                <div class="px-6 lg:px-20 py-24 space-y-32 bg-white dark:bg-surface-900" *ngIf="!buscando && !verDetalleActivo">
                     <!-- Sección 1: App -->
-                    <div class="relative flex flex-col md:flex-row items-center">
-                        <div class="w-full md:w-3/4 overflow-hidden rounded-xl shadow-lg">
-                            <img src="/demo/images/galleria/landing1.jpg" alt="App TuPisoYa" class="w-full h-[400px] object-cover transition-transform hover:scale-105 duration-500">
+                    <div class="info-section relative flex flex-col md:flex-row items-center gap-12">
+                        <div class="image-wrap-premium w-full md:w-3/5 overflow-hidden rounded-[3rem] shadow-2xl">
+                            <img src="/demo/images/galleria/landing1.jpg" alt="App TuPisoYa" class="w-full h-[500px] object-cover transition-transform hover:scale-105 duration-1000">
                         </div>
-                        <div class="w-full md:w-1/3 md:absolute md:right-0 bg-white dark:bg-surface-800 p-8 rounded-lg shadow-xl mt-[-40px] md:mt-0 z-10 border border-gray-100 dark:border-surface-700">
-                            <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Lleva TuPisoYa siempre contigo</h3>
-                            <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">Con nuestra app serás el primero en enterarte de nuevos inmuebles, cambios en tus favoritos y mensajes del chat.</p>
-                            <div class="flex items-center gap-4 cursor-pointer" (click)="openAppModal()">
-                                <div class="bg-gray-100 p-2 rounded"><i class="pi pi-qrcode text-5xl text-gray-800"></i></div>
-                                <span class="text-sm text-gray-500 font-medium underline">Haz clic para descargar</span>
+                        <div class="content-card-premium w-full md:w-2/5 bg-white/80 backdrop-blur-xl p-12 rounded-[2.5rem] shadow-2xl border border-gray-100">
+                            <div class="section-tag mb-6">APLICACIÓN MÓVIL</div>
+                            <h3 class="text-4xl font-black mb-6 text-gray-900 leading-tight">Lleva TuPisoYa siempre contigo</h3>
+                            <p class="text-lg text-gray-500 mb-8 leading-relaxed font-medium">Con nuestra app serás el primero en enterarte de nuevos inmuebles, cambios en tus favoritos y mensajes del chat.</p>
+                            <div class="flex items-center gap-6 cursor-pointer group" (click)="openAppModal()">
+                                <div class="qr-btn-premium p-4 rounded-2xl bg-gray-900 transition-all group-hover:scale-110"><i class="pi pi-qrcode text-4xl text-[#D4E157]"></i></div>
+                                <div class="flex flex-col">
+                                    <span class="text-gray-900 font-black text-lg">Descarga Gratuita</span>
+                                    <span class="text-gray-400 font-bold underline">Escanea para empezar</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Sección 2: Valoración -->
-                    <div class="relative flex flex-col md:flex-row-reverse items-center">
-                        <div class="w-full md:w-3/4 overflow-hidden rounded-xl shadow-lg">
-                            <img src="/demo/images/galleria/landing2.png" alt="Valoración" class="w-full h-[400px] object-cover transition-transform hover:scale-105 duration-500">
+                    <div class="info-section relative flex flex-col md:flex-row-reverse items-center gap-12">
+                        <div class="image-wrap-premium w-full md:w-3/5 overflow-hidden rounded-[3rem] shadow-2xl">
+                            <img src="/demo/images/galleria/landing2.png" alt="Valoración" class="w-full h-[500px] object-cover transition-transform hover:scale-105 duration-1000">
                         </div>
-                        <div class="w-full md:w-1/3 md:absolute md:left-0 bg-white dark:bg-surface-800 p-8 rounded-lg shadow-xl mt-[-40px] md:mt-0 z-10 border border-gray-100 dark:border-surface-700">
-                            <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">¿Cuánto vale tu casa?</h3>
-                            <p class="text-gray-600 dark:text-gray-300 mb-4">Una valoración online gratuita en segundos:</p>
-                            <ul class="space-y-2 mb-6 text-gray-600 dark:text-gray-300">
-                                <li class="flex items-start gap-2"><i class="pi pi-check-circle text-green-500 mt-1"></i> Rango de precio preciso</li>
-                                <li class="flex items-start gap-2"><i class="pi pi-check-circle text-green-500 mt-1"></i> Evolución del mercado</li>
-                                <li class="flex items-start gap-2"><i class="pi pi-check-circle text-green-500 mt-1"></i> Comparativa con similares</li>
+                        <div class="content-card-premium w-full md:w-2/5 bg-white/80 backdrop-blur-xl p-12 rounded-[2.5rem] shadow-2xl border border-gray-100">
+                            <div class="section-tag mb-6 color-lime">VALORACIÓN INTELIGENTE</div>
+                            <h3 class="text-4xl font-black mb-6 text-gray-900 leading-tight">¿Cuánto vale tu casa realmente?</h3>
+                            <p class="text-lg text-gray-500 mb-6 font-medium">Obtén una valoración online precisa en segundos gracias a nuestra IA:</p>
+                            <ul class="space-y-4 mb-10">
+                                <li class="flex items-center gap-3 font-bold text-gray-700"><i class="pi pi-check-circle text-[#D4E157] text-xl"></i> Rango de precio preciso</li>
+                                <li class="flex items-center gap-3 font-bold text-gray-700"><i class="pi pi-check-circle text-[#D4E157] text-xl"></i> Evolución real del mercado</li>
+                                <li class="flex items-center gap-3 font-bold text-gray-700"><i class="pi pi-check-circle text-[#D4E157] text-xl"></i> Comparativa avanzada</li>
                             </ul>
-                            <a (click)="openValuationModal()" class="text-primary-600 font-bold hover:underline flex items-center gap-2 cursor-pointer">Valorar tu casa gratis <i class="pi pi-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Sección 3: Casas Rurales -->
-                    <div class="relative flex flex-col md:flex-row items-center">
-                        <div class="w-full md:w-3/4 overflow-hidden rounded-xl shadow-lg">
-                            <img src="/demo/images/galleria/landing3.jpg" alt="Escapada Rural" class="w-full h-[400px] object-cover transition-transform hover:scale-105 duration-500">
-                        </div>
-                        <div class="w-full md:w-1/3 md:absolute md:right-0 bg-white dark:bg-surface-800 p-8 rounded-lg shadow-xl mt-[-40px] md:mt-0 z-10 border border-gray-100 dark:border-surface-700">
-                            <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Escapadas para disfrutar</h3>
-                            <p class="text-gray-600 dark:text-gray-300 mb-6">Todos queremos vacaciones y desconectar del día a día. ¿Te vas a resistir a una escapada rural? Tú eliges.</p>
-                            <a href="#" class="text-primary-600 font-bold hover:underline flex items-center gap-2">Ver alquiler vacacional <i class="pi pi-arrow-right"></i></a>
+                            <a (click)="openValuationModal()" class="btn-action-premium inline-flex items-center gap-3 cursor-pointer">
+                                <span>Valorar mi casa gratis</span>
+                                <i class="pi pi-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- CONTENEDOR DE VISTAS DINÁMICAS (Resultados / Detalle) -->
-                <div class="flex-1 bg-white dark:bg-surface-900 px-6 lg:px-20 py-8" *ngIf="buscando || verDetalleActivo">
+                <div class="flex-1 bg-white dark:bg-surface-900 px-6 lg:px-20 py-12" *ngIf="buscando || verDetalleActivo">
                     <div class="max-w-7xl mx-auto">
                         
                         <!-- Header de Resultados -->
-                        <div *ngIf="buscando && !verDetalleActivo" class="flex justify-between items-center mb-10 pb-6 border-b border-surface-100">
-                            <h2 class="text-3xl font-black text-gray-900 dark:text-white m-0">Resultados de búsqueda</h2>
-                            <button pButton icon="pi pi-times" label="Cerrar búsqueda" class="p-button-text p-button-secondary font-bold" (click)="cerrarBusqueda()"></button>
+                        <div *ngIf="buscando && !verDetalleActivo" class="results-container-header flex justify-between items-end mb-12 pb-8 border-b border-gray-100">
+                            <div class="header-titles">
+                                <p class="text-sm font-black text-gray-400 uppercase tracking-widest mb-2">Búsqueda activa</p>
+                                <h2 class="text-5xl font-black text-gray-900 m-0 tracking-tighter">Resultados encontrados</h2>
+                            </div>
+                            <button pButton icon="pi pi-times" label="Cerrar búsqueda" class="btn-close-premium" (click)="cerrarBusqueda()"></button>
                         </div>
 
                         <!-- Header de Detalle -->
                         <div *ngIf="verDetalleActivo" class="mb-12">
-                            <button pButton label="Volver a los resultados" 
-                                    class="p-button-text p-button-plain font-black text-surface-400 hover:text-primary transition-all p-0 flex items-center gap-2 group" 
-                                    (click)="volver()">
-                                <i class="pi pi-arrow-left transition-transform group-hover:-translate-x-1"></i>
+                            <button class="back-btn-premium group" (click)="volver()">
+                                <div class="back-icon-wrap">
+                                    <i class="pi pi-arrow-left"></i>
+                                </div>
                                 <span>Volver a los resultados</span>
                             </button>
                         </div>
@@ -149,7 +149,6 @@ import { DetalleInmueble } from '../../components/detalle-inmueble/detalle-inmue
                         <app-detalle-inmueble *ngIf="verDetalleActivo" [idInput]="detalleId" [tipoInput]="detalleTipo"></app-detalle-inmueble>
                     </div>
                 </div>
-
                 <footer-widget class="mt-auto" />
             </div>
 
@@ -289,6 +288,133 @@ import { DetalleInmueble } from '../../components/detalle-inmueble/detalle-inmue
     `,
     styles: [`
         .landing-wrapper { scroll-behavior: smooth; }
+        
+        /* Hero Styles */
+        .hero-section {
+            position: relative;
+            background: linear-gradient(135deg, #f1f9b8 0%, #ffffff 100%);
+            border-bottom: 1px solid rgba(212, 225, 87, 0.3);
+        }
+
+        .hero-bg-overlay {
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(212, 225, 87, 0.4) 0%, transparent 70%);
+            filter: blur(100px);
+            z-index: 0;
+        }
+
+        .hero-title {
+            font-family: 'Inter', sans-serif;
+            line-height: 0.9;
+        }
+
+        /* Search Container Premium */
+        .toggle-btn-premium {
+            color: #64748b;
+            &:hover { color: #1A262F; }
+            &.active {
+                background: linear-gradient(135deg, #1A262F 0%, #2D3E4B 100%);
+                color: #fff;
+                box-shadow: 0 10px 20px rgba(26, 38, 47, 0.2);
+            }
+        }
+
+        .premium-input {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid transparent;
+            color: #1A262F;
+            transition: all 0.3s ease;
+            &:focus {
+                background: #fff;
+                border-color: #D4E157;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            }
+        }
+
+        .btn-search-premium {
+            background: linear-gradient(135deg, #1A262F 0%, #2D3E4B 100%);
+            border: none;
+            transition: all 0.3s ease;
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 20px 40px rgba(26, 38, 47, 0.3);
+            }
+        }
+
+        /* Info Sections */
+        .section-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            color: #1A262F;
+            background: #f1f5f9;
+            padding: 0.5rem 1.25rem;
+            border-radius: 999px;
+            &.color-lime { background: #f1f9b8; color: #828a2c; }
+        }
+
+        .btn-action-premium {
+            background: #1A262F;
+            color: #D4E157;
+            padding: 1rem 2rem;
+            border-radius: 1.25rem;
+            font-weight: 900;
+            transition: all 0.3s ease;
+            &:hover {
+                transform: translateX(5px);
+                box-shadow: 0 15px 30px rgba(26, 38, 47, 0.2);
+            }
+        }
+
+        /* Nav & Headers */
+        .btn-close-premium {
+            background: #f1f5f9 !important;
+            border: none !important;
+            color: #64748b !important;
+            font-weight: 800 !important;
+            border-radius: 1rem !important;
+            padding: 0.75rem 1.5rem !important;
+            &:hover { background: #e2e8f0 !important; color: #1A262F !important; }
+        }
+
+        .back-btn-premium {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            color: #94a3b8;
+            font-weight: 800;
+            transition: all 0.3s ease;
+
+            .back-icon-wrap {
+                width: 3.5rem;
+                height: 3.5rem;
+                background: #f8fafc;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                i { font-size: 1.25rem; }
+            }
+
+            &:hover {
+                color: #1A262F;
+                .back-icon-wrap {
+                    background: #1A262F;
+                    color: #D4E157;
+                    transform: translateX(-5px);
+                }
+            }
+        }
     `]
 })
 export class Landing implements OnInit {

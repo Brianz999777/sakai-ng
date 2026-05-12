@@ -163,7 +163,7 @@ import { InputTextModule } from 'primeng/inputtext';
                         </div>
                     </div>
 
-                    <div class="p-6 bg-lime-100 rounded-2xl border border-lime-200 text-lime-900 mb-8" style="background-color: #E6EE9C;">
+                    <div class="p-6 bg-lime-100 rounded-2xl border border-lime-200 text-lime-900 mb-8" style="background-color: #D4E157;">
                         <p class="font-bold flex items-center justify-center gap-2">
                             <i class="pi pi-info-circle"></i> Hemos enviado el informe detallado a {{datos.email}}
                         </p>
