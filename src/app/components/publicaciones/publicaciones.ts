@@ -133,56 +133,58 @@ import { catchError } from 'rxjs/operators';
                                                     <span><i class="pi pi-expand"></i> {{ pub.metros_prop }} m²</span>
                                                 </div>
                                             </div>
-                                            <div class="pub-actions">
-                                                <button class="action-btn edit" (click)="abrirModalEditar(pub, 'venta')"><i class="pi pi-pencil"></i> Editar</button>
-                                                <button class="action-btn delete" (click)="confirmarEliminar(pub, 'venta')"><i class="pi pi-trash"></i> Eliminar</button>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        }
+                                             <div class="pub-actions">
+                                                 <button class="action-btn view" (click)="verAnuncio(pub, 'venta')"><i class="pi pi-eye"></i> Ver anuncio</button>
+                                                 <button class="action-btn edit" (click)="abrirModalEditar(pub, 'venta')"><i class="pi pi-pencil"></i> Editar</button>
+                                                 <button class="action-btn delete" (click)="confirmarEliminar(pub, 'venta')"><i class="pi pi-trash"></i> Eliminar</button>
+                                             </div>
+                                         </div>
+                                     }
+                                 </div>
+                             </div>
+                         }
 
-                        <!-- SECCIÓN ALQUILERES -->
-                        @if (alquileres.length > 0) {
-                            <div class="seccion">
-                                <div class="seccion-header">
-                                    <div class="seccion-icon alquiler-icon">
-                                        <i class="pi pi-key"></i>
-                                    </div>
-                                    <h2 class="seccion-title">Alquileres</h2>
-                                    <span class="seccion-count">{{ alquileres.length }}</span>
-                                </div>
-                                <div class="cards-grid">
-                                    @for (pub of alquileres; track pub.id_prop) {
-                                        <div class="pub-card">
-                                            <div class="pub-img-area">
-                                                <img [src]="getFotoPrincipal(pub)" alt="" class="pub-img" (error)="onImgError($event)" />
-                                                <div class="pub-badges">
-                                                    <span class="badge-tipo alquiler">Alquiler</span>
-                                                    @if (pub.fotos?.length > 0) {
-                                                        <span class="badge-fotos"><i class="pi pi-camera"></i> {{ pub.fotos.length }}</span>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div class="pub-body">
-                                                <h3 class="pub-address">{{ getDireccion(pub) }}</h3>
-                                                <p class="pub-price">{{ pub.precio_alquiler | number:'1.0-0' }} € <span class="text-sm font-medium text-gray-400">/mes</span></p>
-                                                <div class="pub-features">
-                                                    <span><i class="pi pi-home"></i> {{ pub.nro_habitaciones || '?' }} hab.</span>
-                                                    <span><i class="pi pi-box"></i> {{ pub.nro_banos_prop || '?' }} baños</span>
-                                                    <span><i class="pi pi-expand"></i> {{ pub.metros_prop }} m²</span>
-                                                </div>
-                                            </div>
-                                            <div class="pub-actions">
-                                                <button class="action-btn edit" (click)="abrirModalEditar(pub, 'alquiler')"><i class="pi pi-pencil"></i> Editar</button>
-                                                <button class="action-btn delete" (click)="confirmarEliminar(pub, 'alquiler')"><i class="pi pi-trash"></i> Eliminar</button>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        }
+                         <!-- SECCIÓN ALQUILERES -->
+                         @if (alquileres.length > 0) {
+                             <div class="seccion">
+                                 <div class="seccion-header">
+                                     <div class="seccion-icon alquiler-icon">
+                                         <i class="pi pi-key"></i>
+                                     </div>
+                                     <h2 class="seccion-title">Alquileres</h2>
+                                     <span class="seccion-count">{{ alquileres.length }}</span>
+                                 </div>
+                                 <div class="cards-grid">
+                                     @for (pub of alquileres; track pub.id_prop) {
+                                         <div class="pub-card">
+                                             <div class="pub-img-area">
+                                                 <img [src]="getFotoPrincipal(pub)" alt="" class="pub-img" (error)="onImgError($event)" />
+                                                 <div class="pub-badges">
+                                                     <span class="badge-tipo alquiler">Alquiler</span>
+                                                     @if (pub.fotos?.length > 0) {
+                                                         <span class="badge-fotos"><i class="pi pi-camera"></i> {{ pub.fotos.length }}</span>
+                                                     }
+                                                 </div>
+                                             </div>
+                                             <div class="pub-body">
+                                                 <h3 class="pub-address">{{ getDireccion(pub) }}</h3>
+                                                 <p class="pub-price">{{ pub.precio_alquiler | number:'1.0-0' }} € <span class="text-sm font-medium text-gray-400">/mes</span></p>
+                                                 <div class="pub-features">
+                                                     <span><i class="pi pi-home"></i> {{ pub.nro_habitaciones || '?' }} hab.</span>
+                                                     <span><i class="pi pi-box"></i> {{ pub.nro_banos_prop || '?' }} baños</span>
+                                                     <span><i class="pi pi-expand"></i> {{ pub.metros_prop }} m²</span>
+                                                 </div>
+                                             </div>
+                                             <div class="pub-actions">
+                                                 <button class="action-btn view" (click)="verAnuncio(pub, 'alquiler')"><i class="pi pi-eye"></i> Ver anuncio</button>
+                                                 <button class="action-btn edit" (click)="abrirModalEditar(pub, 'alquiler')"><i class="pi pi-pencil"></i> Editar</button>
+                                                 <button class="action-btn delete" (click)="confirmarEliminar(pub, 'alquiler')"><i class="pi pi-trash"></i> Eliminar</button>
+                                             </div>
+                                         </div>
+                                     }
+                                 </div>
+                             </div>
+                         }
                     }
                 </div>
             </section>
@@ -633,6 +635,7 @@ import { catchError } from 'rxjs/operators';
         justify-content: center;
         gap: 0.35rem;
         transition: all 0.3s ease;
+        &.view { background: #eef2ff; color: #4f46e5; &:hover { background: #e0e7ff; color: #4338ca; } }
         &.edit { background: #f1f5f9; color: #475569; &:hover { background: #e2e8f0; color: #1A262F; } }
         &.delete { background: #fef2f2; color: #ef4444; &:hover { background: #fee2e2; } }
     }
@@ -808,6 +811,12 @@ export class Publicaciones implements OnInit {
     if (parts.length > 0) return parts.join(' ');
     if (pub.provincia_prop) return pub.provincia_prop;
     return 'Dirección no disponible';
+  }
+
+  verAnuncio(pub: any, tipo: string) {
+    this.router.navigate(['/landing'], {
+      queryParams: { detalle: pub.id_prop, tipo }
+    });
   }
 
   getFotoPrincipal(pub: any): string {

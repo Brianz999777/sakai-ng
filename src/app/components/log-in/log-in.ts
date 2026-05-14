@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -10,6 +10,8 @@ import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { finalize } from 'rxjs';
+
 
 @Component({
   selector: 'app-log-in',
@@ -476,6 +478,8 @@ export class LogIn {
   private router = inject(Router);
   private authService = inject(Auth);
   private messageService = inject(MessageService);
+  private cdr = inject(ChangeDetectorRef);
+
 
   formLogin: FormGroup;
   submitting = false;
@@ -506,10 +510,14 @@ export class LogIn {
       password: formValues.password
     };
 
-    this.authService.login(loginRequest).subscribe({
+    this.authService.login(loginRequest).pipe(
+      finalize(() => {
+        this.submitting = false;
+        this.cdr.detectChanges();
+      })
+    ).subscribe({
       next: (response) => {
         console.log('[Login] Éxito:', response);
-        this.submitting = false;
         this.messageService.add({
           severity: 'success',
           summary: '¡Bienvenido!',
@@ -521,19 +529,28 @@ export class LogIn {
         }, 500);
       },
       error: (error: any) => {
-        this.submitting = false;
         console.error('[Login] Error:', error);
 
         // Extraer mensaje de error del backend
-        const backendMsg = error.error?.message || error.error?.error || '';
-        if (error.status === 401) {
+        let backendMsg = '';
+        try {
+          backendMsg = error.error?.message || error.error?.error || '';
+        } catch (e) {
+          backendMsg = '';
+        }
+
+        if (error.status === 401 || error.status === 403) {
           this.errorMsg = backendMsg || 'Credenciales incorrectas. Verifica tu email y contraseña.';
         } else if (error.status === 0) {
           this.errorMsg = 'No se pudo conectar con el servidor. Intenta de nuevo.';
         } else {
           this.errorMsg = backendMsg || 'Error al iniciar sesión. Intenta de nuevo.';
         }
+
+        this.cdr.detectChanges();
       }
     });
+
+
   }
 }
