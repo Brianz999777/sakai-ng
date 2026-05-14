@@ -38,6 +38,8 @@ import { DetalleInmueble } from '../../components/detalle-inmueble/detalle-inmue
                 <!-- HERO (Solo en inicio) -->
                 <div id="hero" class="hero-section flex flex-col items-center justify-center pt-32 pb-40 px-6 lg:px-20 overflow-hidden" *ngIf="!buscando && !verDetalleActivo">
                     <div class="hero-bg-overlay"></div>
+                    <div class="hero-glow-1"></div>
+                    <div class="hero-glow-2"></div>
                     
                     <h1 class="hero-title text-6xl md:text-8xl font-black text-[#1A262F] mb-6 text-center tracking-tighter relative z-10">
                         Tu hogar, <span class="text-[#D4E157] drop-shadow-[0_4px_12px_rgba(212,225,87,0.3)]">a un clic.</span>
@@ -145,8 +147,8 @@ import { DetalleInmueble } from '../../components/detalle-inmueble/detalle-inmue
 
                         <!-- Componentes -->
                         <app-buqueda-venta *ngIf="buscando && !verDetalleActivo && operacionActiva === 'comprar'" [terminoBusquedaInput]="terminoBusquedaActivo" (onInmuebleSelected)="mostrarDetalle($event)"></app-buqueda-venta>
-                        <app-buqueda-alquiler *ngIf="buscando && !verDetalleActivo && operacionActiva === 'alquilar'" [terminoBusquedaInput]="terminoBusquedaActivo" (onInmuebleSelected)="mostrarDetalle($event)"></app-buqueda-alquiler>
                         <app-detalle-inmueble *ngIf="verDetalleActivo" [idInput]="detalleId" [tipoInput]="detalleTipo"></app-detalle-inmueble>
+                        <app-buqueda-alquiler *ngIf="buscando && !verDetalleActivo && operacionActiva === 'alquilar'" [terminoBusquedaInput]="terminoBusquedaActivo" (onInmuebleSelected)="mostrarDetalle($event)"></app-buqueda-alquiler>
                     </div>
                 </div>
                 <footer-widget class="mt-auto" />
@@ -273,12 +275,12 @@ import { DetalleInmueble } from '../../components/detalle-inmueble/detalle-inmue
                     <div class="grid grid-cols-2 gap-8">
                         <div class="text-center p-4 border rounded-2xl bg-gray-50">
                             <h3 class="font-bold mb-4">Android</h3>
-                            <img src="assets/demo/images/galleria/qr_playstore.png" class="w-32 h-32 mx-auto mb-4">
+                            <img src="/demo/images/galleria/qr_playstore.png" class="w-32 h-32 mx-auto mb-4">
                             <button class="w-full py-2 bg-gray-900 text-white rounded-lg font-bold">Google Play</button>
                         </div>
                         <div class="text-center p-4 border rounded-2xl bg-gray-50">
                             <h3 class="font-bold mb-4">iOS</h3>
-                            <img src="assets/demo/images/galleria/qr_appstore.png" class="w-32 h-32 mx-auto mb-4">
+                            <img src="/demo/images/galleria/qr_appstore.png" class="w-32 h-32 mx-auto mb-4">
                             <button class="w-full py-2 bg-gray-900 text-white rounded-lg font-bold">App Store</button>
                         </div>
                     </div>
@@ -289,10 +291,10 @@ import { DetalleInmueble } from '../../components/detalle-inmueble/detalle-inmue
     styles: [`
         .landing-wrapper { scroll-behavior: smooth; }
         
-        /* Hero Styles */
+        /* Hero Styles - Inspirado en el perfil */
         .hero-section {
             position: relative;
-            background: linear-gradient(135deg, #f1f9b8 0%, #ffffff 100%);
+            background: linear-gradient(135deg, #D4E157 0%, #A3C92A 50%, #84B01E 100%);
             border-bottom: 1px solid rgba(212, 225, 87, 0.3);
         }
 
@@ -302,8 +304,30 @@ import { DetalleInmueble } from '../../components/detalle-inmueble/detalle-inmue
             right: -10%;
             width: 60%;
             height: 100%;
-            background: radial-gradient(circle, rgba(212, 225, 87, 0.4) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
             filter: blur(100px);
+            z-index: 0;
+        }
+
+        .hero-glow-1 {
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 50%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .hero-glow-2 {
+            position: absolute;
+            top: 10%;
+            left: 30%;
+            width: 40%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(26,38,47,0.05) 0%, transparent 70%);
+            filter: blur(60px);
             z-index: 0;
         }
 

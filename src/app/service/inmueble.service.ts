@@ -32,9 +32,14 @@ export class InmuebleService {
     return this.http.post<PropiedadVenta>(`${this.baseUrl}/ventas`, payload);
   }
 
-  crearVenta(venta: InmuebleVentaDto): Observable<any> {
+  crearVenta(venta: any): Observable<any> {
     const payload = { ...venta, type: 'venta' };
-    return this.http.post<any>(`${this.baseUrl}/venta`, payload);
+    return this.http.post<any>(`${this.baseUrl}/ventas`, payload);
+  }
+
+  crearAlquiler(alquiler: any): Observable<any> {
+    const payload = { ...alquiler, type: 'alquiler' };
+    return this.http.post<any>(`${this.baseUrl}/alquiler`, payload);
   }
 
   updateVenta(id: number, venta: PropiedadVenta): Observable<PropiedadVenta> {
@@ -50,5 +55,22 @@ export class InmuebleService {
   updateAlquiler(id: number, alquiler: PropiedadAlquiler): Observable<PropiedadAlquiler> {
     const payload = { ...alquiler, type: 'alquiler' };
     return this.http.put<PropiedadAlquiler>(`${this.baseUrl}/alquiler/${id}`, payload);
+  }
+
+  // Publicaciones del usuario logueado
+  getVentasByUser(nroDoc: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/ventas/usuario/${nroDoc}`);
+  }
+
+  getAlquileresByUser(nroDoc: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/alquiler/usuario/${nroDoc}`);
+  }
+
+  deleteVenta(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/ventas/${id}`);
+  }
+
+  deleteAlquiler(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/alquiler/${id}`);
   }
 }

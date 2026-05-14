@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
+import { Auth } from '../../service/auth';
 
 @Component({
     selector: 'app-menu',
@@ -20,8 +21,12 @@ import { AppMenuitem } from './app.menuitem';
 })
 export class AppMenu {
     model: MenuItem[] = [];
+    private authService = inject(Auth);
 
     ngOnInit() {
+        const user = this.authService.getUser();
+        const isLoggedIn = !!user?.nro_doc_dto;
+
         this.model = [
             {
                 label: 'Home',
@@ -31,7 +36,11 @@ export class AppMenu {
                 label: 'Auth',
                 items: [
                     { label: 'Register', icon: 'pi pi-fw pi-user-plus', routerLink: ['/register'] },
-                    { label: 'Login', icon: 'pi pi-fw pi-user-plus', routerLink: ['/login'] }
+                    { label: 'Login', icon: 'pi pi-fw pi-user-plus', routerLink: ['/login'] },
+                    ...(isLoggedIn ? [
+                        { label: 'Mi Perfil', icon: 'pi pi-fw pi-user', routerLink: ['/perfil'] },
+                        { label: 'Mis Publicaciones', icon: 'pi pi-fw pi-list', routerLink: ['/publicaciones'] }
+                    ] : [])
                 ]
             },
             {

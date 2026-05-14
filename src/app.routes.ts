@@ -15,6 +15,9 @@ import { Nosotros } from './app/pages/nosotros/nosotros';
 import { Servicios } from './app/pages/servicios/servicios';
 import { Contacto } from './app/pages/contacto/contacto';
 import { Valoracion } from './app/pages/valoracion/valoracion';
+import { Perfil } from './app/components/perfil/perfil';
+import { PublicarAnuncio } from './app/components/publicar-anuncio/publicar-anuncio';
+import { Publicaciones } from './app/components/publicaciones/publicaciones';
 
 export const appRoutes: Routes = [
     {
@@ -31,6 +34,9 @@ export const appRoutes: Routes = [
             { path: 'detalle-alquiler/:id', component: DetalleInmueble }
         ]
     },
+    { path: 'perfil', component: Perfil },
+    { path: 'publicaciones', component: Publicaciones },
+    { path: 'publicar-anuncio', component: PublicarAnuncio },
     { path: 'landing', component: Landing },
     { path: 'nosotros', component: Nosotros },
     { path: 'servicios', component: Servicios },

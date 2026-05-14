@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDTO } from '../interfaces/user-dto';
 import { tap } from 'rxjs';
@@ -10,7 +10,7 @@ import { tap } from 'rxjs';
 })
 export class Auth {
 
-  private readonly baseUrl = 'http://localhost:8080/tupisoya/auth';
+  private readonly baseUrl = 'http://localhost:8080/tupisoya';
 
   private readonly tokenKey = 'authToken';
   private readonly userKey = 'authUser';
@@ -21,7 +21,7 @@ export class Auth {
     console.log("registerRequest AUTH", registerRequest);
     
     // Retornamos el observable SIN suscribirnos aquí
-    return this.http.post<any>(`${this.baseUrl}/register`, registerRequest).pipe(
+    return this.http.post<any>(`${this.baseUrl}/auth/register`, registerRequest).pipe(
       tap((response) => {
         // Esto se ejecuta automáticamente cuando el componente se suscriba
         this.setToken(response.token);
@@ -32,7 +32,7 @@ export class Auth {
 
   // Haz lo mismo con el login para evitar errores futuros
   login(loginRequest: any) {
-    return this.http.post<any>(`${this.baseUrl}/login`, loginRequest).pipe(
+    return this.http.post<any>(`${this.baseUrl}/auth/login`, loginRequest).pipe(
       tap((response) => {
         this.setToken(response.token);
         this.setUser(response.usuario_dto);
@@ -47,6 +47,12 @@ export class Auth {
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  cambioPassword(peticion: { password_actual: string; password_nueva: string }) {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.baseUrl}/cambio-password`, peticion, { headers, responseType: 'text' });
   }
 
   logout(): void {

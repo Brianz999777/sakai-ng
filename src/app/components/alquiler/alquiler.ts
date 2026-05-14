@@ -26,6 +26,9 @@ export class Alquiler {
   }
 
   get mainPhoto(): string {
+    if (this.inmueble.foto_principal) {
+      return this.inmueble.foto_principal;
+    }
     return '/demo/images/galleria/no_photo.png';
   }
 }

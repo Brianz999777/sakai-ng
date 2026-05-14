@@ -119,9 +119,13 @@ export class DetalleInmueble implements OnInit, OnChanges {
     return this.inmuebleVenta || this.inmuebleAlquiler;
   }
 
-  get fotos() {
+  get fotos(): { url_foto: string }[] {
     if (this.generalInfo?.fotos && this.generalInfo.fotos.length > 0) {
-      return this.generalInfo.fotos;
+      // Las fotos pueden venir como objetos Foto { url_foto } o como strings
+      return this.generalInfo.fotos.map((f: any) => {
+        if (typeof f === 'string') return { url_foto: f };
+        return { url_foto: f.url_foto || f.url || '/demo/images/galleria/no_photo.png' };
+      });
     }
     return [{ url_foto: '/demo/images/galleria/no_photo.png' }];
   }

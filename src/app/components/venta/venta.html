@@ -13,7 +13,7 @@
 
             <div class="photo-count-glass">
                 <i class="pi pi-camera"></i>
-                <span>1</span>
+                <span>{{ inmueble.fotos?.length || 1 }}</span>
             </div>
 
             <div class="reformed-badge" *ngIf="inmueble.reforma_venta">

@@ -41,6 +41,7 @@ export interface TarjetaAlquiler {
     foto_principal: string;
     permite_mascotas_alquiler: boolean;
     ascensor_prop: boolean;
+    fotos?: Foto[];
     // Campos opcionales para evitar romper filtros si faltan
     tipo_inmueble?: string;
     nro_habitaciones?: number;
@@ -63,6 +64,7 @@ export interface TarjetaVenta {
     clase_energetica_venta: string;
     reforma_venta: boolean;
     aire_acondicionado_venta: boolean;
+    fotos?: Foto[];
     // Campos opcionales para evitar romper filtros si faltan
     tipo_inmueble?: string;
     nro_habitaciones?: number;

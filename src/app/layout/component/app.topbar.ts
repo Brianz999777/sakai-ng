@@ -72,7 +72,11 @@ import { LayoutService } from '@/app/layout/service/layout.service';
                         <i class="pi pi-inbox"></i>
                         <span>Messages</span>
                     </button>
-                    <button type="button" class="layout-topbar-action">
+                    <button type="button" class="layout-topbar-action" routerLink="/publicaciones">
+                        <i class="pi pi-list"></i>
+                        <span>Mis pubs</span>
+                    </button>
+                    <button type="button" class="layout-topbar-action" routerLink="/perfil">
                         <i class="pi pi-user"></i>
                         <span>Profile</span>
                     </button>

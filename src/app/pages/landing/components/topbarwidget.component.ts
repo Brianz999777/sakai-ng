@@ -1,14 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
 import { Router, RouterModule } from '@angular/router';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
-import {AppFloatingConfigurator} from "@/app/layout/component/app.floatingconfigurator";
+import { AvatarModule } from 'primeng/avatar';
+import { TooltipModule } from 'primeng/tooltip';
+import { AppFloatingConfigurator } from "@/app/layout/component/app.floatingconfigurator";
+import { Auth } from '@/app/service/auth';
+import { UserDTO } from '@/app/interfaces/user-dto';
 
 @Component({
     selector: 'topbar-widget',
-    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, AppFloatingConfigurator],
-    template: `        <a class="flex items-center cursor-pointer" (click)="router.navigate(['/landing'])">
+    standalone: true,
+    imports: [
+        CommonModule,
+        RouterModule,
+        StyleClassModule,
+        ButtonModule,
+        RippleModule,
+        AvatarModule,
+        TooltipModule,
+        AppFloatingConfigurator
+    ],
+    template: `
+        <a class="flex items-center cursor-pointer" (click)="router.navigate(['/landing'])">
             <img src="/demo/images/galleria/logo.png" alt="TuPisoYa Logo" class="h-16 md:h-24 mr-20">
         </a>
 
@@ -38,14 +54,91 @@ import {AppFloatingConfigurator} from "@/app/layout/component/app.floatingconfig
                         <span>Contacto</span>
                     </a>
                 </li>
+                @if (isLoggedIn) {
+                    <li>
+                        <a (click)="router.navigate(['/publicaciones'])" pRipple class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl hover:text-primary-500 transition-colors">
+                            <span>Publicaciones</span>
+                        </a>
+                    </li>
+                }
             </ul>
-            <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-2">
-                <button pButton pRipple label="Iniciar Sesión" routerLink="/login" [rounded]="true" [text]="true"></button>
-                <button pButton pRipple label="Registrarse" routerLink="/register" [rounded]="true"></button>
+            <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-2 items-center">
+                <!-- Si está logueado: mostrar avatar + nombre -->
+                @if (isLoggedIn) {
+                    <button pButton
+                        pRipple
+                        [rounded]="true"
+                        [text]="true"
+                        class="user-profile-btn"
+                        (click)="router.navigate(['/publicaciones'])"
+                        pTooltip="Mis publicaciones"
+                        tooltipPosition="bottom">
+                        <i class="pi pi-list text-xl"></i>
+                    </button>
+                    <button pButton
+                        pRipple
+                        [rounded]="true"
+                        [text]="true"
+                        class="user-profile-btn"
+                        (click)="router.navigate(['/perfil'])"
+                        pTooltip="Ir a mi perfil"
+                        tooltipPosition="bottom">
+                        <div class="flex items-center gap-3">
+                            <p-avatar
+                                [label]="getInitials()"
+                                size="normal"
+                                shape="circle"
+                                styleClass="topbar-avatar"
+                                [style]="{ 'background': 'linear-gradient(135deg, #D4E157, #A3C92A)', 'color': '#1A262F', 'font-weight': '800', 'width': '36px', 'height': '36px', 'font-size': '0.85rem' }"
+                            ></p-avatar>
+                            <span class="font-bold text-surface-900 dark:text-surface-0 hidden md:inline">{{ getFullName() }}</span>
+                        </div>
+                    </button>
+                } @else {
+                    <button pButton pRipple label="Iniciar Sesión" routerLink="/login" [rounded]="true" [text]="true"></button>
+                    <button pButton pRipple label="Registrarse" routerLink="/register" [rounded]="true"></button>
+                }
                 <app-floating-configurator [float]="false"/>
             </div>
-        </div> `
+        </div>
+    `,
+    styles: [`
+        .user-profile-btn {
+            &:hover {
+                background: rgba(212, 225, 87, 0.15) !important;
+            }
+        }
+        .topbar-avatar {
+            transition: transform 0.2s ease;
+        }
+        .user-profile-btn:hover .topbar-avatar {
+            transform: scale(1.1);
+        }
+    `]
 })
-export class TopbarWidget {
-    constructor(public router: Router) {}
+export class TopbarWidget implements OnInit {
+    isLoggedIn = false;
+    user: UserDTO | null = null;
+
+    constructor(
+        public router: Router,
+        private authService: Auth
+    ) {}
+
+    ngOnInit() {
+        this.isLoggedIn = this.authService.isLoggedIn();
+        this.user = this.authService.getUser();
+    }
+
+    getInitials(): string {
+        if (!this.user) return '?';
+        const apellidos = this.user.apellidos_dto || '';
+        const nombres = apellidos.split(' ');
+        return nombres.map(n => n.charAt(0)).join('').substring(0, 2).toUpperCase();
+    }
+
+    getFullName(): string {
+        if (!this.user) return 'Usuario';
+        return this.user.apellidos_dto || 'Usuario';
+    }
 }
