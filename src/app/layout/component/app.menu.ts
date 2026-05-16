@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
-import { Auth } from '../../service/auth';
+import { Auth } from '../../service/auth.service';
 
 @Component({
     selector: 'app-menu',
@@ -25,7 +25,7 @@ export class AppMenu {
 
     ngOnInit() {
         const user = this.authService.getUser();
-        const isLoggedIn = !!user?.nro_doc_dto;
+        const isLoggedIn = !!user?.nro_doc_per;
 
         this.model = [
             {

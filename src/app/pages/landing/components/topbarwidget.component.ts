@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppFloatingConfigurator } from "@/app/layout/component/app.floatingconfigurator";
-import { Auth } from '@/app/service/auth';
+import { Auth } from '@/app/service/auth.service';
 import { UserDTO } from '@/app/interfaces/user-dto';
 
 @Component({
@@ -132,13 +132,17 @@ export class TopbarWidget implements OnInit {
 
     getInitials(): string {
         if (!this.user) return '?';
-        const apellidos = this.user.apellidos_dto || '';
-        const nombres = apellidos.split(' ');
-        return nombres.map(n => n.charAt(0)).join('').substring(0, 2).toUpperCase();
+        const nombre = this.user.nombre_per || '';
+        const apellido = this.user.apellido_pat_per || '';
+        return (nombre.charAt(0) + apellido.charAt(0)).toUpperCase() || '?';
     }
 
     getFullName(): string {
         if (!this.user) return 'Usuario';
-        return this.user.apellidos_dto || 'Usuario';
+        if (this.user.type === 'juridica') {
+            return this.user.nombre_per || 'Usuario';
+        }
+        const partes = [this.user.nombre_per, this.user.apellido_pat_per, this.user.apellido_mat_per];
+        return partes.filter(p => p && p !== 'N/A').join(' ') || 'Usuario';
     }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Auth } from '@/app/service/auth';
+import { Auth } from '@/app/service/auth.service';
 import { UserDTO } from '@/app/interfaces/user-dto';
 import { TopbarWidget } from '@/app/pages/landing/components/topbarwidget.component';
 import { FooterWidget } from '@/app/pages/landing/components/footerwidget';
@@ -168,26 +168,35 @@ export class Perfil implements OnInit {
 
   getInitials(): string {
     if (!this.user) return '?';
-    const apellidos = this.user.apellidos_dto || '';
-    const nombres = apellidos.split(' ');
-    return nombres.map(n => n.charAt(0)).join('').substring(0, 2).toUpperCase();
+    const nombre = this.user.nombre_per || '';
+    const apellido = this.user.apellido_pat_per || '';
+    return (nombre.charAt(0) + apellido.charAt(0)).toUpperCase() || '?';
   }
 
   getFullName(): string {
     if (!this.user) return 'Usuario';
-    return this.user.apellidos_dto || 'Usuario';
+    if (this.user.type === 'juridica') {
+      return this.user.nombre_per || 'Usuario';
+    }
+    // Persona natural
+    const partes = [this.user.nombre_per, this.user.apellido_pat_per, this.user.apellido_mat_per];
+    return partes.filter(p => p && p !== 'N/A').join(' ') || 'Usuario';
   }
 
   getEmail(): string {
-    return this.user?.email_dto || 'email@ejemplo.com';
+    return this.user?.email || 'email@ejemplo.com';
   }
 
   getDocument(): string {
-    return this.user?.nro_doc_dto || '---';
+    return this.user?.nro_doc_per || '---';
+  }
+
+  getDocumentType(): string {
+    return this.user?.tipo_doc_per || '---';
   }
 
   getRole(): string {
-    const role = this.user?.rol_dto || '';
+    const role = this.user?.rol || '';
     switch (role) {
       case 'ADMIN': return 'Administrador';
       case 'USER': return 'Usuario';
@@ -197,11 +206,29 @@ export class Perfil implements OnInit {
   }
 
   getRoleIcon(): string {
-    const role = this.user?.rol_dto || '';
+    const role = this.user?.rol || '';
     switch (role) {
       case 'ADMIN': return 'pi pi-shield';
       case 'AGENT': return 'pi pi-briefcase';
       default: return 'pi pi-user';
     }
   }
+
+  getPersonType(): string {
+    if (!this.user) return 'Persona Natural';
+    return this.user.type === 'juridica' ? 'Persona Jurídica' : 'Persona Natural';
+  }
+
+  getRepresentante(): string {
+    return this.user?.nombre_representante_juri || '---';
+  }
+
+  getCargo(): string {
+    return this.user?.cargo_juri || '---';
+  }
+
+  getRegistroMercantil(): string {
+    return this.user?.registro_mercantil_juri || '---';
+  }
+
 }

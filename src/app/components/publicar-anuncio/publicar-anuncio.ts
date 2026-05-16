@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageService } from 'primeng/api';
-import { Auth } from '../../service/auth';
+import { Auth } from '../../service/auth.service';
 import { InmuebleService } from '../../service/inmueble.service';
 
 interface FotoPreview {
@@ -995,8 +995,8 @@ export class PublicarAnuncio implements OnInit {
 
     ngOnInit() {
         const user = this.authService.getUser();
-        if (user?.nro_doc_dto) {
-            this.formData.nro_doc_dueno = user.nro_doc_dto;
+        if (user?.nro_doc_per) {
+            this.formData.nro_doc_dueno = user.nro_doc_per;
         }
         this.formData.antiguedad_prop = this.calcularAntiguedad();
     }

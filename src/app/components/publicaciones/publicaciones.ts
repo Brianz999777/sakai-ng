@@ -13,7 +13,7 @@ import { SelectModule } from 'primeng/select';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Auth } from '../../service/auth';
+import { Auth } from '../../service/auth.service';
 import { InmuebleService } from '../../service/inmueble.service';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -724,11 +724,11 @@ export class Publicaciones implements OnInit {
 
   ngOnInit() {
     const user = this.authService.getUser();
-    if (!user?.nro_doc_dto) {
+    if (!user?.nro_doc_per) {
       this.router.navigate(['/login']);
       return;
     }
-    this.nroDocActual = user.nro_doc_dto;
+    this.nroDocActual = user.nro_doc_per;
     this.cargarPublicaciones();
   }
 

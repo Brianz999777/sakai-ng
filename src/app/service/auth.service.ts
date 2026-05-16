@@ -19,6 +19,8 @@ export class Auth {
 
   register(registerRequest: any) {
     console.log("registerRequest AUTH", registerRequest);
+    console.log("registerRequest", registerRequest.persona_dto);
+    
     
     // Retornamos el observable SIN suscribirnos aquí
     return this.http.post<any>(`${this.baseUrl}/auth/register`, registerRequest).pipe(

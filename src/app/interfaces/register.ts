@@ -6,6 +6,5 @@ export interface RegisterRequest {
   password: string;
   estado_usu: string;
   rol: string;
-  personaNatural?: PersonaNatural;
-  personaJuridica?: PersonaJuridica;
+  persona: PersonaNatural | PersonaJuridica;
 }

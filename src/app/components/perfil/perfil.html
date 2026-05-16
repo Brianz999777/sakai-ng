@@ -31,14 +31,19 @@
                         <div class="hero-meta">
                             <span class="meta-chip">
                                 <i class="pi pi-id-card"></i>
-                                {{ getDocument() }}
+                                {{ getDocumentType() }}: {{ getDocument() }}
                             </span>
                             <span class="meta-chip">
                                 <i [class]="getRoleIcon()"></i>
                                 {{ getRole() }}
                             </span>
+                            <span class="meta-chip">
+                                <i class="pi pi-building"></i>
+                                {{ getPersonType() }}
+                            </span>
                         </div>
                     </div>
+
 
                     <!-- Actions -->
                     <div class="hero-actions ml-auto">

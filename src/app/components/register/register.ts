@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Auth } from '@/app/service/auth';
+import { Auth } from '@/app/service/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -74,17 +74,17 @@ import { MessageService } from 'primeng/api';
                     <div class="form-row">
                       <div class="field">
                         <label class="field-label">Nombre</label>
-                        <input pInputText type="text" placeholder="Tus nombres" class="field-input" formControlName="nombre_per"
-                          [ngClass]="{ 'field-error': f['nombre_per'].invalid && (f['nombre_per'].dirty || f['nombre_per'].touched) }" />
-                        @if (f['nombre_per'].invalid && (f['nombre_per'].dirty || f['nombre_per'].touched)) {
+                        <input pInputText type="text" placeholder="Tus nombres" class="field-input" formControlName="nombrePer"
+                          [ngClass]="{ 'field-error': f['nombrePer'].invalid && (f['nombrePer'].dirty || f['nombrePer'].touched) }" />
+                        @if (f['nombrePer'].invalid && (f['nombrePer'].dirty || f['nombrePer'].touched)) {
                           <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> El nombre es obligatorio</div>
                         }
                       </div>
                       <div class="field">
                         <label class="field-label">Apellido Paterno</label>
-                        <input pInputText type="text" placeholder="Apellido paterno" class="field-input" formControlName="apellido_pat_per"
-                          [ngClass]="{ 'field-error': f['apellido_pat_per'].invalid && (f['apellido_pat_per'].dirty || f['apellido_pat_per'].touched) }" />
-                        @if (f['apellido_pat_per'].invalid && (f['apellido_pat_per'].dirty || f['apellido_pat_per'].touched)) {
+                        <input pInputText type="text" placeholder="Apellido paterno" class="field-input" formControlName="apellidoPatPer"
+                          [ngClass]="{ 'field-error': f['apellidoPatPer'].invalid && (f['apellidoPatPer'].dirty || f['apellidoPatPer'].touched) }" />
+                        @if (f['apellidoPatPer'].invalid && (f['apellidoPatPer'].dirty || f['apellidoPatPer'].touched)) {
                           <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> El apellido paterno es obligatorio</div>
                         }
                       </div>
@@ -92,17 +92,17 @@ import { MessageService } from 'primeng/api';
                     <div class="form-row">
                       <div class="field">
                         <label class="field-label">Apellido Materno</label>
-                        <input pInputText type="text" placeholder="Apellido materno" class="field-input" formControlName="apellido_mat_per" />
+                        <input pInputText type="text" placeholder="Apellido materno" class="field-input" formControlName="apellidoMatPer" />
                       </div>
                       <div class="field">
                         <label class="field-label">Sexo</label>
                         <div class="radio-group">
                           <div class="radio-option">
-                            <input type="radio" value="M" formControlName="sexo_per" id="sexo_m" />
+                            <input type="radio" value="M" formControlName="sexoPer" id="sexo_m" />
                             <label for="sexo_m">Masculino</label>
                           </div>
                           <div class="radio-option">
-                            <input type="radio" value="F" formControlName="sexo_per" id="sexo_f" />
+                            <input type="radio" value="F" formControlName="sexoPer" id="sexo_f" />
                             <label for="sexo_f">Femenino</label>
                           </div>
                         </div>
@@ -111,19 +111,19 @@ import { MessageService } from 'primeng/api';
                     <div class="form-row">
                       <div class="field">
                         <label class="field-label">Año de Nacimiento</label>
-                        <input pInputText type="number" placeholder="Ej. 1990" class="field-input" formControlName="anio_nac_per"
-                          [ngClass]="{ 'field-error': f['anio_nac_per'].invalid && (f['anio_nac_per'].dirty || f['anio_nac_per'].touched) }" />
-                        @if (f['anio_nac_per'].invalid && (f['anio_nac_per'].dirty || f['anio_nac_per'].touched)) {
+                        <input pInputText type="number" placeholder="Ej. 1990" class="field-input" formControlName="anioNacPer"
+                          [ngClass]="{ 'field-error': f['anioNacPer'].invalid && (f['anioNacPer'].dirty || f['anioNacPer'].touched) }" />
+                        @if (f['anioNacPer'].invalid && (f['anioNacPer'].dirty || f['anioNacPer'].touched)) {
                           <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> El año es obligatorio</div>
                         }
                       </div>
                       <div class="field">
                         <label class="field-label">Ingresos Aprox. (€)</label>
-                        <input pInputText type="number" placeholder="2500" class="field-input" formControlName="ingresos_aprox_natu" />
+                        <input pInputText type="number" placeholder="2500" class="field-input" formControlName="ingresosAproxNatu" />
                       </div>
                     </div>
                     <div class="checkbox-row">
-                      <p-checkbox formControlName="primer_vivienda_natu" id="primerVivienda" binary></p-checkbox>
+                      <p-checkbox formControlName="primerViviendaNatu" id="primerVivienda" binary></p-checkbox>
                       <label for="primerVivienda" class="checkbox-label">¿Es tu primera vivienda?</label>
                     </div>
                   </div>
@@ -135,17 +135,17 @@ import { MessageService } from 'primeng/api';
                     <div class="form-row">
                       <div class="field">
                         <label class="field-label">Razón Social</label>
-                        <input pInputText type="text" placeholder="Nombre de la empresa" class="field-input" formControlName="nombre_per"
-                          [ngClass]="{ 'field-error': f['nombre_per'].invalid && (f['nombre_per'].dirty || f['nombre_per'].touched) }" />
-                        @if (f['nombre_per'].invalid && (f['nombre_per'].dirty || f['nombre_per'].touched)) {
+                        <input pInputText type="text" placeholder="Nombre de la empresa" class="field-input" formControlName="nombrePer"
+                          [ngClass]="{ 'field-error': f['nombrePer'].invalid && (f['nombrePer'].dirty || f['nombrePer'].touched) }" />
+                        @if (f['nombrePer'].invalid && (f['nombrePer'].dirty || f['nombrePer'].touched)) {
                           <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> La razón social es obligatoria</div>
                         }
                       </div>
                       <div class="field">
                         <label class="field-label">Cargo</label>
-                        <input pInputText type="text" placeholder="Tu cargo en la empresa" class="field-input" formControlName="cargo_jur"
-                          [ngClass]="{ 'field-error': f['cargo_jur'].invalid && (f['cargo_jur'].dirty || f['cargo_jur'].touched) }" />
-                        @if (f['cargo_jur'].invalid && (f['cargo_jur'].dirty || f['cargo_jur'].touched)) {
+                        <input pInputText type="text" placeholder="Tu cargo en la empresa" class="field-input" formControlName="cargoJuri"
+                          [ngClass]="{ 'field-error': f['cargoJuri'].invalid && (f['cargoJuri'].dirty || f['cargoJuri'].touched) }" />
+                        @if (f['cargoJuri'].invalid && (f['cargoJuri'].dirty || f['cargoJuri'].touched)) {
                           <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> El cargo es obligatorio</div>
                         }
                       </div>
@@ -153,17 +153,17 @@ import { MessageService } from 'primeng/api';
                     <div class="form-row">
                       <div class="field">
                         <label class="field-label">Nombre Representante</label>
-                        <input pInputText type="text" placeholder="Nombre completo" class="field-input" formControlName="nombre_representante_jur"
-                          [ngClass]="{ 'field-error': f['nombre_representante_jur'].invalid && (f['nombre_representante_jur'].dirty || f['nombre_representante_jur'].touched) }" />
-                        @if (f['nombre_representante_jur'].invalid && (f['nombre_representante_jur'].dirty || f['nombre_representante_jur'].touched)) {
+                        <input pInputText type="text" placeholder="Nombre completo" class="field-input" formControlName="nombreRepresentanteJuri"
+                          [ngClass]="{ 'field-error': f['nombreRepresentanteJuri'].invalid && (f['nombreRepresentanteJuri'].dirty || f['nombreRepresentanteJuri'].touched) }" />
+                        @if (f['nombreRepresentanteJuri'].invalid && (f['nombreRepresentanteJuri'].dirty || f['nombreRepresentanteJuri'].touched)) {
                           <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> El nombre del representante es obligatorio</div>
                         }
                       </div>
                       <div class="field">
                         <label class="field-label">Registro Mercantil</label>
-                        <input pInputText type="text" placeholder="Número de registro" class="field-input" formControlName="registro_mercantil_ju"
-                          [ngClass]="{ 'field-error': f['registro_mercantil_ju'].invalid && (f['registro_mercantil_ju'].dirty || f['registro_mercantil_ju'].touched) }" />
-                        @if (f['registro_mercantil_ju'].invalid && (f['registro_mercantil_ju'].dirty || f['registro_mercantil_ju'].touched)) {
+                        <input pInputText type="text" placeholder="Número de registro" class="field-input" formControlName="registroMercantilJuri"
+                          [ngClass]="{ 'field-error': f['registroMercantilJuri'].invalid && (f['registroMercantilJuri'].dirty || f['registroMercantilJuri'].touched) }" />
+                        @if (f['registroMercantilJuri'].invalid && (f['registroMercantilJuri'].dirty || f['registroMercantilJuri'].touched)) {
                           <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> El registro mercantil es obligatorio</div>
                         }
                       </div>
@@ -183,17 +183,17 @@ import { MessageService } from 'primeng/api';
             <div class="form-row">
               <div class="field">
                 <label class="field-label">{{ activeTab === '0' ? 'DNI' : 'RUC / Identificación' }}</label>
-                <input pInputText type="text" [placeholder]="activeTab === '0' ? 'Número de DNI' : 'Número de RUC'" class="field-input" formControlName="nro_doc_per"
-                  [ngClass]="{ 'field-error': f['nro_doc_per'].invalid && (f['nro_doc_per'].dirty || f['nro_doc_per'].touched) }" />
-                @if (f['nro_doc_per'].invalid && (f['nro_doc_per'].dirty || f['nro_doc_per'].touched)) {
+                <input pInputText type="text" [placeholder]="activeTab === '0' ? 'Número de DNI' : 'Número de RUC'" class="field-input" formControlName="nroDocPer"
+                  [ngClass]="{ 'field-error': f['nroDocPer'].invalid && (f['nroDocPer'].dirty || f['nroDocPer'].touched) }" />
+                @if (f['nroDocPer'].invalid && (f['nroDocPer'].dirty || f['nroDocPer'].touched)) {
                   <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> El documento es obligatorio</div>
                 }
               </div>
               <div class="field">
                 <label class="field-label">Domicilio</label>
-                <input pInputText type="text" placeholder="Calle, número, departamento" class="field-input" formControlName="domicilio_per"
-                  [ngClass]="{ 'field-error': f['domicilio_per'].invalid && (f['domicilio_per'].dirty || f['domicilio_per'].touched) }" />
-                @if (f['domicilio_per'].invalid && (f['domicilio_per'].dirty || f['domicilio_per'].touched)) {
+                <input pInputText type="text" placeholder="Calle, número, departamento" class="field-input" formControlName="domicilioPer"
+                  [ngClass]="{ 'field-error': f['domicilioPer'].invalid && (f['domicilioPer'].dirty || f['domicilioPer'].touched) }" />
+                @if (f['domicilioPer'].invalid && (f['domicilioPer'].dirty || f['domicilioPer'].touched)) {
                   <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> El domicilio es obligatorio</div>
                 }
               </div>
@@ -202,17 +202,17 @@ import { MessageService } from 'primeng/api';
             <div class="form-row">
               <div class="field">
                 <label class="field-label">Código Postal</label>
-                <input pInputText type="text" placeholder="Ej. 1000" class="field-input" formControlName="cp_per"
-                  [ngClass]="{ 'field-error': f['cp_per'].invalid && (f['cp_per'].dirty || f['cp_per'].touched) }" />
-                @if (f['cp_per'].invalid && (f['cp_per'].dirty || f['cp_per'].touched)) {
+                <input pInputText type="text" placeholder="Ej. 1000" class="field-input" formControlName="cpPer"
+                  [ngClass]="{ 'field-error': f['cpPer'].invalid && (f['cpPer'].dirty || f['cpPer'].touched) }" />
+                @if (f['cpPer'].invalid && (f['cpPer'].dirty || f['cpPer'].touched)) {
                   <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> El CP es obligatorio</div>
                 }
               </div>
               <div class="field">
                 <label class="field-label">Provincia</label>
-                <input pInputText type="text" placeholder="Ej. Lima" class="field-input" formControlName="provincia_per"
-                  [ngClass]="{ 'field-error': f['provincia_per'].invalid && (f['provincia_per'].dirty || f['provincia_per'].touched) }" />
-                @if (f['provincia_per'].invalid && (f['provincia_per'].dirty || f['provincia_per'].touched)) {
+                <input pInputText type="text" placeholder="Ej. Lima" class="field-input" formControlName="provinciaPer"
+                  [ngClass]="{ 'field-error': f['provinciaPer'].invalid && (f['provinciaPer'].dirty || f['provinciaPer'].touched) }" />
+                @if (f['provinciaPer'].invalid && (f['provinciaPer'].dirty || f['provinciaPer'].touched)) {
                   <div class="field-msg error"><i class="pi pi-exclamation-circle"></i> La provincia es obligatoria</div>
                 }
               </div>
@@ -650,32 +650,32 @@ export class Register {
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
 
-      nro_doc_per: ['', Validators.required],
-      nombre_per: ['', Validators.required],
-      apellido_pat_per: ['', Validators.required],
-      apellido_mat_per: [''],
-      sexo_per: ['M'],
-      anio_nac_per: [1990, Validators.required],
-      domicilio_per: ['', Validators.required],
-      cp_per: ['', Validators.required],
-      provincia_per: ['', Validators.required],
+      nroDocPer: ['', Validators.required],
+      nombrePer: ['', Validators.required],
+      apellidoPatPer: ['', Validators.required],
+      apellidoMatPer: [''],
+      sexoPer: ['M'],
+      anioNacPer: [1990, Validators.required],
+      domicilioPer: ['', Validators.required],
+      cpPer: ['', Validators.required],
+      provinciaPer: ['', Validators.required],
 
-      primer_vivienda_natu: [false],
-      ingresos_aprox_natu: [0],
+      primerViviendaNatu: [false],
+      ingresosAproxNatu: [0],
 
-      cargo_jur: [''],
-      nombre_representante_jur: [''],
-      registro_mercantil_ju: ['']
+      cargoJuri: [''],
+      nombreRepresentanteJuri: [''],
+      registroMercantilJuri: ['']
     }, { validators: this.passwordMatchValidator });
 
     this.updateValidators();
   }
 
   updateValidators() {
-    const cargo = this.formRegister.get('cargo_jur');
-    const representante = this.formRegister.get('nombre_representante_jur');
-    const mercantil = this.formRegister.get('registro_mercantil_ju');
-    const apellido = this.formRegister.get('apellido_pat_per');
+    const cargo = this.formRegister.get('cargoJuri');
+    const representante = this.formRegister.get('nombreRepresentanteJuri');
+    const mercantil = this.formRegister.get('registroMercantilJuri');
+    const apellido = this.formRegister.get('apellidoPatPer');
 
     if (this.activeTab === '1') {
       cargo?.setValidators([Validators.required]);
@@ -711,43 +711,45 @@ export class Register {
     this.submitting = true;
     const formValues = this.formRegister.value;
 
-    const registerRequest: any = {
-      email: formValues.email,
-      password: formValues.password
-    };
-
-    const persona: any = {
-      nro_doc_per: formValues.nro_doc_per,
-      nombre_per: formValues.nombre_per,
-      apellido_mat_per: formValues.apellido_mat_per,
-      sexo_per: formValues.sexo_per,
-      anio_nac_per: formValues.anio_nac_per,
-      domicilio_per: formValues.domicilio_per,
-      cp_per: formValues.cp_per,
-      provincia_per: formValues.provincia_per
+    // Construir el objeto persona con snake_case (coincide con los DTOs de Spring)
+    const personaBase: any = {
+      type: this.activeTab === '0' ? 'natural' : 'juridica',
+      nro_doc_per: formValues.nroDocPer,
+      tipo_doc_per: this.activeTab === '0' ? 'DNI' : 'RUC',
+      nombre_per: formValues.nombrePer,
+      apellido_pat_per: this.activeTab === '0' ? formValues.apellidoPatPer : 'N/A',
+      apellido_mat_per: this.activeTab === '0' ? formValues.apellidoMatPer : 'N/A',
+      sexo_per: formValues.sexoPer,
+      anio_nac_per: formValues.anioNacPer,
+      domicilio_per: formValues.domicilioPer,
+      cp_per: formValues.cpPer,
+      provincia_per: formValues.provinciaPer
     };
 
     if (this.activeTab === '0') {
-      persona.type = 'natural';
-      persona.tipo_doc_per = 'DNI';
-      persona.apellido_pat_per = formValues.apellido_pat_per;
-      persona.primer_vivienda_natu = formValues.primer_vivienda_natu;
-      persona.ingresos_aprox_natu = formValues.ingresos_aprox_natu;
+      // PersonaNatural
+      personaBase.primer_vivienda_natu = formValues.primerViviendaNatu;
+      personaBase.ingresos_aprox_natu = formValues.ingresosAproxNatu;
     } else {
-      persona.type = 'juridica';
-      persona.tipo_doc_per = 'RUC';
-      persona.apellido_pat_per = 'N/A';
-      persona.apellido_mat_per = 'N/A';
-      persona.cargo_juri = formValues.cargo_jur;
-      persona.nombre_representante_juri = formValues.nombre_representante_jur;
-      persona.registro_mercantil_juri = formValues.registro_mercantil_ju;
+      // PersonaJuridica
+      personaBase.cargo_juri = formValues.cargoJuri;
+      personaBase.nombre_representante_juri = formValues.nombreRepresentanteJuri;
+      personaBase.registro_mercantil_juri = formValues.registroMercantilJuri;
     }
 
-    registerRequest.persona = persona;
+    const registerRequest: any = {
+      email: formValues.email,
+      password: formValues.password,
+      estado_usu: 'ACTIVO',
+      rol: 'USER',
+      persona: personaBase
+    };
+
+    console.log('[Register] JSON enviado:', JSON.stringify(registerRequest, null, 2));
 
     this.authService.register(registerRequest).subscribe({
       next: (response) => {
-        console.log('[Register] Éxito:', response);
+        console.log('[Register] Respuesta del servidor:', response);
         this.submitting = false;
         this.messageService.add({
           severity: 'success',
@@ -761,7 +763,8 @@ export class Register {
       },
       error: (error: any) => {
         this.submitting = false;
-        console.error('[Register] Error:', error);
+        console.error('[Register] Error completo:', error);
+        console.error('[Register] Error body:', error.error);
 
         const backendMsg = error.error?.message || error.error?.error || '';
         if (error.status === 409) {

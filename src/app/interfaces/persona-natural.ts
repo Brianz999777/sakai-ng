@@ -10,6 +10,7 @@ export interface PersonaNatural {
   domicilio_per: string;
   cp_per: string;
   provincia_per: string;
+  foto_per?: string;
   primer_vivienda_natu: boolean;
   ingresos_aprox_natu: number;
 }
